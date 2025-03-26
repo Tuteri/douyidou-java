@@ -23,6 +23,10 @@ public class TranscodeResponse implements Serializable {
 	private String url;
 	// 下载url
 	private String downloadUrl;
+	// 目标时长
+	private Integer time;
+	// 类型
+	private String type;
 	// 转码类型
 	private String source;
 	private String target;

@@ -44,7 +44,6 @@ public class ApiClient {
         // 这里可添加 Translate 业务逻辑
         return response;
     }
-
     public Map<String, Object> getTranscodeStats(String task) throws Exception {
         String endpoint = "/67da93be2e6ed";
         return sendGetRequest(endpoint, Collections.singletonMap("task", task));
@@ -54,7 +53,47 @@ public class ApiClient {
         String endpoint = "/67da93deb1116";
         return sendGetRequest(endpoint, Collections.singletonMap("task", task));
     }
-
+    public Map<String, Object> videoMd5(String url) throws Exception {
+        String endpoint = "/67e2d72f4503f";
+        Map<String, Object> response = sendGetRequest(endpoint, Collections.singletonMap("url", url));
+        
+        if (!response.get("code").toString().equals("200")) {
+            throw new RuntimeException("转码失败");
+        }
+        
+        // 这里可添加 Translate 业务逻辑
+        return response;
+    }
+    public Map<String, Object> getVideoMd5Stats(String task) throws Exception {
+        String endpoint = "/67e2d74ecf40b";
+        return sendGetRequest(endpoint, Collections.singletonMap("task", task));
+    }
+    
+    public Map<String, Object> stopVideoMd5(String task) throws Exception {
+        String endpoint = "/67e2d76d08895";
+        return sendGetRequest(endpoint, Collections.singletonMap("task", task));
+    }
+    
+    public Map<String, Object> videoToMp3(String url) throws Exception {
+        String endpoint = "/67e2d77e28347";
+        Map<String, Object> response = sendGetRequest(endpoint, Collections.singletonMap("url", url));
+        
+        if (!response.get("code").toString().equals("200")) {
+            throw new RuntimeException("转码失败");
+        }
+        
+        // 这里可添加 Translate 业务逻辑
+        return response;
+    }
+    public Map<String, Object> getVideoToMp3Stats(String task) throws Exception {
+        String endpoint = "/67e2d7963a823";
+        return sendGetRequest(endpoint, Collections.singletonMap("task", task));
+    }
+    
+    public Map<String, Object> stopVideoToMp3(String task) throws Exception {
+        String endpoint = "67e2d7a87f0fd";
+        return sendGetRequest(endpoint, Collections.singletonMap("task", task));
+    }
     private Map<String, Object> sendGetRequest(String endpoint, Map<String, String> params) throws Exception {
         Map<String, String> data = new HashMap<>(params);
         data.put("app_id", appId);

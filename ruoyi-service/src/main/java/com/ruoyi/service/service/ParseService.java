@@ -62,14 +62,17 @@ public class ParseService {
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.transcode(url);
 			if (!res.get("code").equals(200)) {
-				throw new DouException("转码失败");
+				throw new DouException("任务失败");
 			}
 			JSONObject data = JSONObject.from(res.get("data"));
 			TranscodeResponse transcodeResponse = data.toJavaObject(TranscodeResponse.class);
 			System.out.println(data);
 			DouTranslate douTranslate = new DouTranslate();
-			BeanUtils.copyProperties(transcodeResponse, douTranslate);
 			douTranslate.setUrl(url);
+			douTranslate.setSource(ext);
+			douTranslate.setTarget("mp4");
+			douTranslate.setType(1);
+			
 			// 自定义任务名
 			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : douTranslate.getTask().replaceAll("-","");
 			if(name.length()>10){
@@ -82,10 +85,75 @@ public class ParseService {
 			return CommonResult.success(transcodeResponse);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return CommonResult.failed("转码失败");
+			return CommonResult.failed("任务失败");
 		}
 	}
-	
+	public CommonResult<TranscodeResponse> videoMd5(DouTranslate translate) {
+		try {
+			String url = translate.getUrl();
+			String ext = DouUtils.getUrlExt(url);
+			ApiClient apiClient = getApiClient();
+			Map<String, Object> res = apiClient.videoMd5(url);
+			if (!res.get("code").equals(200)) {
+				throw new DouException("任务失败");
+			}
+			JSONObject data = JSONObject.from(res.get("data"));
+			TranscodeResponse transcodeResponse = data.toJavaObject(TranscodeResponse.class);
+			System.out.println(data);
+			DouTranslate douTranslate = new DouTranslate();
+			douTranslate.setUrl(url);
+			douTranslate.setSource(ext);
+			douTranslate.setTarget("mp4");
+			douTranslate.setType(2);
+			
+			// 自定义任务名
+			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : douTranslate.getTask().replaceAll("-","");
+			if(name.length()>10){
+				name = name.substring(0,10);
+			}
+			douTranslate.setName(name);
+			translateService.insertOne(douTranslate, transcodeResponse);
+			BeanUtils.copyProperties(douTranslate,transcodeResponse);
+			transcodeResponse.setStats(douTranslate.getStatus());
+			return CommonResult.success(transcodeResponse);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return CommonResult.failed("任务失败");
+		}
+	}
+	public CommonResult<TranscodeResponse> videoToMp3(DouTranslate translate) {
+		try {
+			String url = translate.getUrl();
+			String ext = DouUtils.getUrlExt(url);
+			ApiClient apiClient = getApiClient();
+			Map<String, Object> res = apiClient.videoToMp3(url);
+			if (!res.get("code").equals(200)) {
+				throw new DouException("任务失败");
+			}
+			JSONObject data = JSONObject.from(res.get("data"));
+			TranscodeResponse transcodeResponse = data.toJavaObject(TranscodeResponse.class);
+			System.out.println(data);
+			DouTranslate douTranslate = new DouTranslate();
+			douTranslate.setUrl(url);
+			douTranslate.setSource(ext);
+			douTranslate.setTarget("mp3");
+			douTranslate.setType(3);
+			
+			// 自定义任务名
+			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : douTranslate.getTask().replaceAll("-","");
+			if(name.length()>10){
+				name = name.substring(0,10);
+			}
+			douTranslate.setName(name);
+			translateService.insertOne(douTranslate, transcodeResponse);
+			BeanUtils.copyProperties(douTranslate,transcodeResponse);
+			transcodeResponse.setStats(douTranslate.getStatus());
+			return CommonResult.success(transcodeResponse);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return CommonResult.failed("任务失败");
+		}
+	}
 	/**
 	 * 查询全部的任务状态
 	 */
@@ -96,7 +164,16 @@ public class ParseService {
 		List<DouTranslate> list = translateService.list(lqw);
 		for (DouTranslate douTranslate : list) {
 			try {
-				TranscodeResponse transcodeResponse = getTranscodeStats(douTranslate.getTask());
+				TranscodeResponse transcodeResponse;
+				if(douTranslate.getType() == 1){
+					transcodeResponse = getTranscodeStats(douTranslate.getTask());
+				}else if(douTranslate.getType() == 2){
+					transcodeResponse = getVideoMd5Stats(douTranslate.getTask());
+				}else if(douTranslate.getType() == 3){
+					transcodeResponse = getVideoToMp3Stats(douTranslate.getTask());
+				}else {
+					break;
+				}
 				Integer stats = transcodeResponse.getStats();
 				
 				switch (stats){
@@ -119,6 +196,7 @@ public class ParseService {
 						break;
 				}
 				douTranslate.setStatus(stats);
+				douTranslate.setTargetTime(transcodeResponse.getTime());
 				translateService.updateById(douTranslate);
 				
 			}catch (DouException e){
@@ -132,7 +210,7 @@ public class ParseService {
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.getTranscodeStats(task);
 			if (!res.get("code").equals(200)) {
-				throw new DouException("获取转码信息失败");
+				throw new DouException("获取任务信息失败");
 			}
 			System.out.println(res);
 			JSONObject data = JSONObject.from(res.get("data"));
@@ -140,10 +218,41 @@ public class ParseService {
 			return transcodeResponse;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DouException("获取转码信息失败");
+			throw new DouException("获取任务信息失败");
 		}
 	}
-	
+	public TranscodeResponse getVideoMd5Stats(String task) {
+		try {
+			ApiClient apiClient = getApiClient();
+			Map<String, Object> res = apiClient.getVideoMd5Stats(task);
+			if (!res.get("code").equals(200)) {
+				throw new DouException("获取任务信息失败");
+			}
+			System.out.println(res);
+			JSONObject data = JSONObject.from(res.get("data"));
+			TranscodeResponse transcodeResponse = data.toJavaObject(TranscodeResponse.class);
+			return transcodeResponse;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DouException("获取任务信息失败");
+		}
+	}
+	public TranscodeResponse getVideoToMp3Stats(String task) {
+		try {
+			ApiClient apiClient = getApiClient();
+			Map<String, Object> res = apiClient.getVideoToMp3Stats(task);
+			if (!res.get("code").equals(200)) {
+				throw new DouException("获取任务信息失败");
+			}
+			System.out.println(res);
+			JSONObject data = JSONObject.from(res.get("data"));
+			TranscodeResponse transcodeResponse = data.toJavaObject(TranscodeResponse.class);
+			return transcodeResponse;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DouException("获取任务信息失败");
+		}
+	}
 	@Transactional(rollbackFor = Exception.class)
 	public CommonResult<TranscodeResponse> stopTranscode(String task) {
 		try {
@@ -154,7 +263,7 @@ public class ParseService {
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.stopTranscode(task);
 			if (!res.get("code").equals(200)) {
-				throw new DouException("停止转码失败");
+				throw new DouException("停止任务失败");
 			}
 			System.out.println(res);
 			JSONObject data = JSONObject.from(res.get("data"));
@@ -165,7 +274,7 @@ public class ParseService {
 			translateService.updateById(douTranslate1);
 			return CommonResult.success(translateResponse);
 		} catch (Exception e) {
-			return CommonResult.failed("停止转码失败");
+			return CommonResult.failed("停止任务失败");
 		}
 	}
 	

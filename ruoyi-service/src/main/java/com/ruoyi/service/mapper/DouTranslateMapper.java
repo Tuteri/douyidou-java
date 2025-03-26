@@ -2,6 +2,7 @@ package com.ruoyi.service.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.service.domain.DouTranslate;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @author Tuteri
  * @date 2025-03-20
  */
+@Mapper
 public interface DouTranslateMapper extends BaseMapper<DouTranslate>
 {
     /**

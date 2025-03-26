@@ -43,6 +43,22 @@ public class ParseApi {
 		}
 		return parseService.transcode(translate);
 	}
+	@PostMapping("videoMd5")
+	public CommonResult<TranscodeResponse> videoMd5(@RequestBody DouTranslate translate){
+		String url = translate.getUrl();
+		if(StringUtils.isNull(url) || StringUtils.isEmpty(url) || StringUtils.isBlank(url)){
+			throw new DouException("URL不能为空");
+		}
+		return parseService.videoMd5(translate);
+	}
+	@PostMapping("videoToMp3")
+	public CommonResult<TranscodeResponse> videoToMp3(@RequestBody DouTranslate translate){
+		String url = translate.getUrl();
+		if(StringUtils.isNull(url) || StringUtils.isEmpty(url) || StringUtils.isBlank(url)){
+			throw new DouException("URL不能为空");
+		}
+		return parseService.videoToMp3(translate);
+	}
 	//@GetMapping("transcode/stats")
 	//public CommonResult<TranscodeResponse> transcodeStats(@RequestParam String task){
 	//	if(StringUtils.isNull(task) || StringUtils.isEmpty(task) || StringUtils.isBlank(task)){
@@ -58,8 +74,8 @@ public class ParseApi {
 		return translateService.getInfo(id);
 	}
 	@GetMapping("transcode/list")
-	public CommonResult<PageResult<TranscodeResponse>> transcodeList(PageParamRequest pageParamRequest){
-		return CommonResult.success(translateService.getListByUser(pageParamRequest));
+	public CommonResult<PageResult<TranscodeResponse>> transcodeList(DouTranslate douTranslateRequest,PageParamRequest pageParamRequest){
+		return CommonResult.success(translateService.getListByUser(douTranslateRequest,pageParamRequest));
 	}
 	@GetMapping("transcode/stop")
 	public CommonResult<TranscodeResponse> transcodeStop(@RequestParam String task){

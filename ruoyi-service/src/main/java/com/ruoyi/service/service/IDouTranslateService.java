@@ -20,7 +20,7 @@ public interface IDouTranslateService extends IService<DouTranslate>
 {
     CommonResult<TranscodeResponse> getInfo(Long id);
     DouTranslate findByTask(String task);
-    PageResult<TranscodeResponse> getListByUser(PageParamRequest pageParamRequest);
+    PageResult<TranscodeResponse> getListByUser(DouTranslate douTranslateRequest,PageParamRequest pageParamRequest);
     
     public DouTranslate insertOne(DouTranslate douTranslate, TranscodeResponse transcodeResponse);
     

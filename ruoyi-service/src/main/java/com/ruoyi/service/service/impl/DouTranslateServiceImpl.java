@@ -3,6 +3,7 @@ package com.ruoyi.service.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -41,6 +42,7 @@ public class DouTranslateServiceImpl extends ServiceImpl<DouTranslateMapper, Dou
 		TranscodeResponse transcodeResponse = new TranscodeResponse();
 		BeanUtils.copyProperties(douTranslate,transcodeResponse);
 		transcodeResponse.setStats(douTranslate.getStatus());
+		transcodeResponse.setTime(douTranslate.getTargetTime());
 		return CommonResult.success(transcodeResponse);
 	}
 	
@@ -59,9 +61,12 @@ public class DouTranslateServiceImpl extends ServiceImpl<DouTranslateMapper, Dou
 	 * 获取集合
 	 */
 	@Override
-	public PageResult<TranscodeResponse> getListByUser(PageParamRequest pageParamRequest) {
+	public PageResult<TranscodeResponse> getListByUser(DouTranslate douTranslateRequest,PageParamRequest pageParamRequest) {
 		PageHelper.startPage(pageParamRequest.getPage(), pageParamRequest.getLimit());
+		Integer type = douTranslateRequest.getType();
+		if(Objects.isNull(type)) type = 1;
 		LambdaQueryWrapper<DouTranslate> lqw = getLqw();
+		lqw.eq(DouTranslate::getType,type);
 		lqw.orderByDesc(DouTranslate::getId);
 		List<DouTranslate> list = list(lqw);
 		PageInfo<DouTranslate> pageInfo = new PageInfo<>(list);
@@ -70,6 +75,7 @@ public class DouTranslateServiceImpl extends ServiceImpl<DouTranslateMapper, Dou
 			TranscodeResponse transcodeResponse = new TranscodeResponse();
 			BeanUtils.copyProperties(douTranslate, transcodeResponse);
 			transcodeResponse.setStats(douTranslate.getStatus());
+			transcodeResponse.setTime(douTranslate.getTargetTime());
 			transcodeResponseList.add(transcodeResponse);
 		}
 		PageResult<TranscodeResponse> transcodeResponsePageInfo = PageResult.restPage(pageInfo, transcodeResponseList);
@@ -89,10 +95,9 @@ public class DouTranslateServiceImpl extends ServiceImpl<DouTranslateMapper, Dou
 		douTranslate.setUid(douUser.getId());
 		douTranslate.setCreateTime(new Date());
 		douTranslate.setUpdateTime(new Date());
-		douTranslate.setSource("m3u8");
-		douTranslate.setTarget("mp4");
 		douTranslate.setStatus(transcodeResponse.getStats());
 		douTranslate.setTask(transcodeResponse.getTask());
+		douTranslate.setTargetTime(transcodeResponse.getTime());
 		save(douTranslate);
 		return douTranslate;
 	}

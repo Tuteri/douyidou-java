@@ -62,7 +62,13 @@ public class DouTranslate extends BaseEntity
     /** 下载地址 */
     @Excel(name = "下载地址")
     private String downloadUrl;
-
+    
+    /** 目标时长 */
+    @Excel(name = "目标时长")
+    private Integer targetTime;
+    /** 类型 */
+    @Excel(name = "类型")
+    private Integer type;
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")

@@ -14,13 +14,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="status"    column="status"    />
         <result property="task"    column="task"    />
         <result property="downloadUrl"    column="download_url"    />
+        <result property="targetTime"    column="target_time"    />
+        <result property="type"    column="type"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
         <result property="doneTime"    column="done_time"    />
     </resultMap>
 
     <sql id="selectDouTranslateVo">
-        select id,name, url, source, target, uid, status, task, download_url, create_time, update_time,done_time from dou_translate
+        select id,name, url, source, target, uid, status, task, download_url,target_time,type, create_time, update_time,done_time from dou_translate
     </sql>
 
     <select id="selectDouTranslateList" parameterType="DouTranslate" resultMap="DouTranslateResult">
