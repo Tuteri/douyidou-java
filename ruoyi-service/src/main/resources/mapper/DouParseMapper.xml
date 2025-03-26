@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.service.mapper.DouParseMapper">
+    
+    <resultMap type="DouParse" id="DouParseResult">
+        <result property="id"    column="id"    />
+        <result property="url"    column="url"    />
+        <result property="urlHash"    column="url_hash"    />
+        <result property="type"    column="type"    />
+        <result property="video"    column="video"    />
+        <result property="audio"    column="audio"    />
+        <result property="images"    column="images"    />
+        <result property="cover"    column="cover"    />
+        <result property="text"    column="text"    />
+        <result property="platform"    column="platform"    />
+        <result property="proxy"    column="proxy"    />
+        <result property="origin"    column="origin"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectDouParseVo">
+        select id, url, url_hash, type, video, audio, images, cover, text, platform, proxy, origin, create_time, update_time from dou_parse
+    </sql>
+
+    <select id="selectDouParseList" parameterType="DouParse" resultMap="DouParseResult">
+        <include refid="selectDouParseVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="text != null  and text != ''"> and text like concat('%', #{text}, '%')</if>
+            <if test="platform != null "> and platform = #{platform}</if>
+        </where>
+        order By id Desc
+    </select>
+    
+    <select id="selectDouParseById" parameterType="Long" resultMap="DouParseResult">
+        <include refid="selectDouParseVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDouParse" parameterType="DouParse" useGeneratedKeys="true" keyProperty="id">
+        insert into dou_parse
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="url != null and url != ''">url,</if>
+            <if test="urlHash != null">url_hash,</if>
+            <if test="type != null">type,</if>
+            <if test="video != null">video,</if>
+            <if test="audio != null">audio,</if>
+            <if test="images != null">images,</if>
+            <if test="cover != null">cover,</if>
+            <if test="text != null">text,</if>
+            <if test="platform != null">platform,</if>
+            <if test="proxy != null">proxy,</if>
+            <if test="origin != null">origin,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="url != null and url != ''">#{url},</if>
+            <if test="urlHash != null">#{urlHash},</if>
+            <if test="type != null">#{type},</if>
+            <if test="video != null">#{video},</if>
+            <if test="audio != null">#{audio},</if>
+            <if test="images != null">#{images},</if>
+            <if test="cover != null">#{cover},</if>
+            <if test="text != null">#{text},</if>
+            <if test="platform != null">#{platform},</if>
+            <if test="proxy != null">#{proxy},</if>
+            <if test="origin != null">#{origin},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDouParse" parameterType="DouParse">
+        update dou_parse
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="url != null and url != ''">url = #{url},</if>
+            <if test="urlHash != null">url_hash = #{urlHash},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="video != null">video = #{video},</if>
+            <if test="audio != null">audio = #{audio},</if>
+            <if test="images != null">images = #{images},</if>
+            <if test="cover != null">cover = #{cover},</if>
+            <if test="text != null">text = #{text},</if>
+            <if test="platform != null">platform = #{platform},</if>
+            <if test="proxy != null">proxy = #{proxy},</if>
+            <if test="origin != null">origin = #{origin},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDouParseById" parameterType="Long">
+        delete from dou_parse where id = #{id}
+    </delete>
+
+    <delete id="deleteDouParseByIds" parameterType="String">
+        delete from dou_parse where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

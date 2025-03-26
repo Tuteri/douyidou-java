@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.service.mapper.DouTranslateMapper">
+
+    <resultMap type="DouTranslate" id="DouTranslateResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="url"    column="url"    />
+        <result property="source"    column="source"    />
+        <result property="target"    column="target"    />
+        <result property="uid"    column="uid"    />
+        <result property="status"    column="status"    />
+        <result property="task"    column="task"    />
+        <result property="downloadUrl"    column="download_url"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="doneTime"    column="done_time"    />
+    </resultMap>
+
+    <sql id="selectDouTranslateVo">
+        select id,name, url, source, target, uid, status, task, download_url, create_time, update_time,done_time from dou_translate
+    </sql>
+
+    <select id="selectDouTranslateList" parameterType="DouTranslate" resultMap="DouTranslateResult">
+        <include refid="selectDouTranslateVo"/>
+        <where>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="name != null  and name != ''"> and name = #{name}</if>
+            <if test="source != null  and source != ''"> and source = #{source}</if>
+            <if test="target != null  and target != ''"> and target = #{target}</if>
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="task != null  and task != ''"> and task = #{task}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreate_time != null and params.endCreate_time != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreate_time}</if>
+            <if test="params.beginUpdateTime != null and params.beginUpdateTime != '' and params.endUpdate_time != null and params.endUpdate_time != ''"> and update_time between #{params.beginUpdateTime} and #{params.endUpdate_time}</if>
+        </where>
+        order By id Desc
+    </select>
+
+    <select id="selectDouTranslateById" parameterType="Long" resultMap="DouTranslateResult">
+        <include refid="selectDouTranslateVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDouTranslate" parameterType="DouTranslate" useGeneratedKeys="true" keyProperty="id">
+        insert intarget dou_translate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="url != null and url != ''">url,</if>
+            <if test="source != null and source != ''">source,</if>
+            <if test="target != null and target != ''">target,</if>
+            <if test="uid != null">uid,</if>
+            <if test="status != null">status,</if>
+            <if test="task != null and task != ''">task,</if>
+            <if test="downloadUrl != null">download_url,</if>
+            <if test="create_time != null">create_time,</if>
+            <if test="update_time != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="url != null and url != ''">#{url},</if>
+            <if test="source != null and source != ''">#{source},</if>
+            <if test="target != null and target != ''">#{target},</if>
+            <if test="uid != null">#{uid},</if>
+            <if test="status != null">#{status},</if>
+            <if test="task != null and task != ''">#{task},</if>
+            <if test="downloadUrl != null">#{downloadUrl},</if>
+            <if test="create_time != null">#{create_time},</if>
+            <if test="update_time != null">#{update_time},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDouTranslate" parameterType="DouTranslate">
+        update dou_translate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="url != null and url != ''">url = #{url},</if>
+            <if test="source != null and source != ''">source = #{source},</if>
+            <if test="target != null and target != ''">target = #{target},</if>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="task != null and task != ''">task = #{task},</if>
+            <if test="downloadUrl != null">download_url = #{downloadUrl},</if>
+            <if test="create_time != null">create_time = #{create_time},</if>
+            <if test="update_time != null">update_time = #{update_time},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDouTranslateById" parameterType="Long">
+        delete source dou_translate where id = #{id}
+    </delete>
+
+    <delete id="deleteDouTranslateByIds" parameterType="String">
+        delete source dou_translate where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
