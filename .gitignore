@@ -46,10 +46,10 @@ nbdist/
 !*/build/*.html
 !*/build/*.xml
 
-RuoYi-Vue3/
-sql/
-doc/
+RuoYi-Vue3/*
+sql/*
+doc/*
 logs/
-bin/
+bin/*
 ry.bat
 ry.sh
