@@ -54,8 +54,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null">status,</if>
             <if test="task != null and task != ''">task,</if>
             <if test="downloadUrl != null">download_url,</if>
-            <if test="create_time != null">create_time,</if>
-            <if test="update_time != null">update_time,</if>
+            <if test="createTime != null">createTime,</if>
+            <if test="updateTime != null">updateTime,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="url != null and url != ''">#{url},</if>
@@ -65,8 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null">#{status},</if>
             <if test="task != null and task != ''">#{task},</if>
             <if test="downloadUrl != null">#{downloadUrl},</if>
-            <if test="create_time != null">#{create_time},</if>
-            <if test="update_time != null">#{update_time},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
          </trim>
     </insert>
 
@@ -80,8 +80,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null">status = #{status},</if>
             <if test="task != null and task != ''">task = #{task},</if>
             <if test="downloadUrl != null">download_url = #{downloadUrl},</if>
-            <if test="create_time != null">create_time = #{create_time},</if>
-            <if test="update_time != null">update_time = #{update_time},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
         </trim>
         where id = #{id}
     </update>

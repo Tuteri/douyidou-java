@@ -43,8 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="wxOpenid != null">wx_openid,</if>
             <if test="username != null and username != ''">username,</if>
             <if test="password != null and password != ''">password,</if>
-            <if test="update_time != null">update_time,</if>
-            <if test="create_time != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createTime != null">create_time,</if>
             <if test="avatar != null">avatar,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -52,8 +52,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="wxOpenid != null">#{wxOpenid},</if>
             <if test="username != null and username != ''">#{username},</if>
             <if test="password != null and password != ''">#{password},</if>
-            <if test="update_time != null">#{update_time},</if>
-            <if test="create_time != null">#{create_time},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createTime != null">#{createTime},</if>
             <if test="avatar != null">#{avatar},</if>
          </trim>
     </insert>
@@ -65,8 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="wxOpenid != null">wx_openid = #{wxOpenid},</if>
             <if test="username != null and username != ''">username = #{username},</if>
             <if test="password != null and password != ''">password = #{password},</if>
-            <if test="update_time != null">update_time = #{update_time},</if>
-            <if test="create_time != null">create_time = #{create_time},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
             <if test="avatar != null">avatar = #{avatar},</if>
         </trim>
         where id = #{id}

@@ -49,7 +49,7 @@ nbdist/
 RuoYi-Vue3/*
 sql/*
 doc/*
-logs/
+logs/*
 bin/*
 ry.bat
 ry.sh

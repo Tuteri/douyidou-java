@@ -89,6 +89,7 @@ public class DouUserController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody DouUser douUser)
     {
+        System.out.println(douUser);
         return toAjax(douUserService.updateDouUser(douUser));
     }
 
