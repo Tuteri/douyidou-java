@@ -46,7 +46,7 @@ nbdist/
 !*/build/*.html
 !*/build/*.xml
 
-RuoYi-Vue3/*
+RuoYi-Vue3/
 sql/
 doc/
 logs/
