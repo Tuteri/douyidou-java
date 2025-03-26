@@ -1,28 +1,30 @@
 ruoyi:
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: /www/wwwroot/d1dserver/uploadPath
+  profile: ${dou.uploadPath}
 
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 7999
+  port: ${server.port}
 spring:
+  config:
+    import: file:config.properties
   data:
     # redis 配置
     redis:
       # 地址
-      host: localhost
+      host: ${redis.host}
       # 端口，默认为6379
-      port: 6379
+      port: ${redis.port}
       # 数据库索引
-      database: 0
+      database: ${redis.database}
       # 密码
-      password:
+      password: ${redis.password}
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     druid:
       # 主库数据源
       master:
-        url: jdbc:mysql://localhost:3306/d1dserver?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-        username: root
-        password: 0040d613fa01a10d
+        url: jdbc:mysql://${mysql.host}:${mysql.port}/${mysql.database}?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: ${mysql.username}
+        password: ${mysql.password}
