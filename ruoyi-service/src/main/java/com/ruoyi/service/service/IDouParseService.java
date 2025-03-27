@@ -3,6 +3,11 @@ package com.ruoyi.service.service;
 import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoyi.service.common.PageResult;
+import com.ruoyi.service.common.request.PageParamRequest;
+import com.ruoyi.service.common.response.CommonResult;
+import com.ruoyi.service.common.response.parse.DouParseResponse;
+import com.ruoyi.service.common.response.parse.VideoParseResponse;
 import com.ruoyi.service.domain.DouParse;
 
 /**
@@ -13,6 +18,21 @@ import com.ruoyi.service.domain.DouParse;
  */
 public interface IDouParseService extends IService<DouParse>
 {
+    CommonResult<DouParseResponse> getInfo(DouParse douParseRequest);
+    
+    /**
+     * 查询视频解析记录
+     *
+     * @param id 视频解析记录主键
+     * @return 视频解析记录
+     */
+    public PageResult<DouParseResponse> getListByUser(DouParse douParse, PageParamRequest pageParamRequest);
+    /**
+     * 查询视频解析记录
+     * @param urlHash 视频解析记录主键
+     * @return 视频解析记录
+     */
+    public DouParse findByHash(String urlHash);
     /**
      * 查询视频解析记录
      * 

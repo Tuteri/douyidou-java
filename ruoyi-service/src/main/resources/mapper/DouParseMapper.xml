@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="DouParse" id="DouParseResult">
         <result property="id"    column="id"    />
+        <result property="uid"    column="uid"    />
         <result property="url"    column="url"    />
         <result property="urlHash"    column="url_hash"    />
         <result property="type"    column="type"    />
@@ -22,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectDouParseVo">
-        select id, url, url_hash, type, video, audio, images, cover, text, platform, proxy, origin, create_time, update_time from dou_parse
+        select id,uid, url, url_hash, type, video, audio, images, cover, text, platform, proxy, origin, create_time, update_time from dou_parse
     </sql>
 
     <select id="selectDouParseList" parameterType="DouParse" resultMap="DouParseResult">

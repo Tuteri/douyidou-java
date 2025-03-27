@@ -1,9 +1,15 @@
 package com.ruoyi.service.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+
+import java.util.Date;
+import java.util.Map;
 
 /**
  * 视频解析记录对象 dou_parse
@@ -11,12 +17,15 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author Tuteri
  * @date 2025-03-23
  */
+@Data
 public class DouParse extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** id */
     private Long id;
+    /** uid */
+    private Long uid;
 
     /** 视频url */
     @Excel(name = "视频url")
@@ -59,144 +68,25 @@ public class DouParse extends BaseEntity
 
     /** 源 json */
     private String origin;
-
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
-
-    public Long getId() 
-    {
-        return id;
-    }
-
-    public void setUrl(String url) 
-    {
-        this.url = url;
-    }
-
-    public String getUrl() 
-    {
-        return url;
-    }
-
-    public void setUrlHash(String urlHash) 
-    {
-        this.urlHash = urlHash;
-    }
-
-    public String getUrlHash() 
-    {
-        return urlHash;
-    }
-
-    public void setType(String type) 
-    {
-        this.type = type;
-    }
-
-    public String getType() 
-    {
-        return type;
-    }
-
-    public void setVideo(String video) 
-    {
-        this.video = video;
-    }
-
-    public String getVideo() 
-    {
-        return video;
-    }
-
-    public void setAudio(String audio) 
-    {
-        this.audio = audio;
-    }
-
-    public String getAudio() 
-    {
-        return audio;
-    }
-
-    public void setImages(String images) 
-    {
-        this.images = images;
-    }
-
-    public String getImages() 
-    {
-        return images;
-    }
-
-    public void setCover(String cover) 
-    {
-        this.cover = cover;
-    }
-
-    public String getCover() 
-    {
-        return cover;
-    }
-
-    public void setText(String text) 
-    {
-        this.text = text;
-    }
-
-    public String getText() 
-    {
-        return text;
-    }
-
-    public void setPlatform(Integer platform) 
-    {
-        this.platform = platform;
-    }
-
-    public Integer getPlatform() 
-    {
-        return platform;
-    }
-
-    public void setProxy(String proxy) 
-    {
-        this.proxy = proxy;
-    }
-
-    public String getProxy() 
-    {
-        return proxy;
-    }
-
-    public void setOrigin(String origin) 
-    {
-        this.origin = origin;
-    }
-
-    public String getOrigin() 
-    {
-        return origin;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("url", getUrl())
-            .append("urlHash", getUrlHash())
-            .append("type", getType())
-            .append("video", getVideo())
-            .append("audio", getAudio())
-            .append("images", getImages())
-            .append("cover", getCover())
-            .append("text", getText())
-            .append("platform", getPlatform())
-            .append("proxy", getProxy())
-            .append("origin", getOrigin())
-            .append("createTime", getCreateTime())
-            .append("updateTime", getUpdateTime())
-            .toString();
-    }
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date createTime;
+    
+    /** 更新时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date updateTime;
+    
+    
+    @TableField(exist = false)
+    private String searchValue;
+    @TableField(exist = false)
+    private String createBy;
+    @TableField(exist = false)
+    private String updateBy;
+    @TableField(exist = false)
+    private String remark;
+    @TableField(exist = false)
+    private Map<String, Object> params;
 }

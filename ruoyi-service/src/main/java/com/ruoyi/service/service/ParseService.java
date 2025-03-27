@@ -1,5 +1,6 @@
 package com.ruoyi.service.service;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
@@ -10,10 +11,13 @@ import com.ruoyi.service.api.ApiClient;
 import com.ruoyi.service.common.request.PageParamRequest;
 import com.ruoyi.service.common.response.CommonResult;
 import com.ruoyi.service.common.response.parse.TranscodeResponse;
+import com.ruoyi.service.common.response.parse.DouParseResponse;
 import com.ruoyi.service.common.response.parse.VideoParseResponse;
+import com.ruoyi.service.domain.DouParse;
 import com.ruoyi.service.domain.DouTranslate;
 import com.ruoyi.service.exception.DouException;
 import com.ruoyi.service.utils.DouUtils;
+import com.ruoyi.service.utils.SecurityUtils;
 import com.ruoyi.system.service.ISysConfigService;
 import org.bouncycastle.oer.its.etsi102941.Url;
 import org.slf4j.Logger;
@@ -34,9 +38,30 @@ public class ParseService {
 	ISysConfigService sysConfigService;
 	@Autowired
 	IDouTranslateService translateService;
-	
-	public CommonResult<VideoParseResponse> url(String url) {
+	@Autowired
+	IDouParseService douParseService;
+	public CommonResult<DouParseResponse> url(String url) {
 		try {
+			String hash = DouUtils.md5(url);
+			//DouParse findDouParse = douParseService.findByHash(hash);
+			DouParse douParse = new DouParse();
+			douParse.setUrl(url);
+			douParse.setUrlHash(hash);
+			douParse.setUid(SecurityUtils.getLoginDouUser().getUser().getId());
+			douParse.setPlatform(0);
+			douParse.setCreateTime(new Date());
+			douParse.setUpdateTime(new Date());
+			//if(ObjectUtil.isNotNull(findDouParse)){
+			//	BeanUtils.copyProperties(findDouParse,douParse);
+			//	douParse.setId(null);
+			//	douParseService.save(douParse);
+			//	DouParseResponse douParseResponse = new DouParseResponse(douParse);
+			//	return CommonResult.success(douParseResponse);
+			//}
+			
+
+			douParseService.save(douParse);
+			Long id = douParse.getId();
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.make(url);
 			if (!res.get("code").equals(200)) {
@@ -45,9 +70,21 @@ public class ParseService {
 			}
 			//String jsonString = JSONObject.toJSONString(res.get("data"));
 			JSONObject data = JSONObject.from(res.get("data"));
-			VideoParseResponse videoParseResponse = data.toJavaObject(VideoParseResponse.class);
-			return CommonResult.success(videoParseResponse);
+			DouParseResponse videoParseResponse = data.toJavaObject(DouParseResponse.class);
+			BeanUtils.copyProperties(videoParseResponse,douParse);
+			douParse.setPlatform(videoParseResponse.getPlatform());
+			douParse.setVideo(JSONObject.toJSONString(videoParseResponse.getVideo()));
+			douParse.setAudio(JSONObject.toJSONString(videoParseResponse.getAudio()));
+			douParse.setImages(JSONObject.toJSONString(videoParseResponse.getImages()));
+			douParse.setProxy(JSONObject.toJSONString(videoParseResponse.getProxy()));
+			douParse.setOrigin(JSONObject.toJSONString(videoParseResponse.getOrigin()));
+			douParse.setUpdateTime(new Date());
+			douParse.setId(id);
+			douParseService.updateById(douParse);
+			DouParseResponse douParseResponse = new DouParseResponse(douParse);
+			return CommonResult.success(douParseResponse);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return CommonResult.failed("解析失败");
 		}
 	}
