@@ -1,0 +1,19 @@
+name:
+  d1dserver
+volumes:
+  mysql8_data:
+services:
+  mysql:
+    image: mysql:8.0.38
+    volumes:
+      - mysql8_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: d1dserver
+      MYSQL_CHARACTER_SET_SERVER: utf8mb4
+      MYSQL_COLLATION_SERVER: utf8mb4_general_ci
+      TZ: Asia/Shanghai
+
