@@ -42,7 +42,7 @@ public interface WxUserService {
 	 * @param code
 	 * @return
 	 */
-	CommonResult<LoginResponse> miniLogin(String code);
+	CommonResult<LoginResponse> miniLogin(String code,HttpServletRequest request);
 	
 	CommonResult<LoginResponse> refreshToken(HttpServletRequest request);
 	

@@ -29,7 +29,7 @@ public class UserLoginApi {
 	 */
 	@PostMapping("/miniLogin")
 	public CommonResult<LoginResponse> login(HttpServletRequest request, @RequestBody LoginMaDTO loginMaDTO){
-		 return wxUserService.miniLogin(loginMaDTO.getCode());
+		 return wxUserService.miniLogin(loginMaDTO.getCode(),request);
 	}
 	@PostMapping("/refreshToken")
 	public CommonResult<LoginResponse> refreshToken(HttpServletRequest request){

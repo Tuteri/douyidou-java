@@ -36,6 +36,7 @@ import com.ruoyi.service.domain.DouUser;
 import com.ruoyi.service.service.DouUserTokenService;
 import com.ruoyi.service.service.IDouUserService;
 import com.ruoyi.service.service.WxUserService;
+import com.ruoyi.service.utils.DouUtils;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.service.entity.LoginDouUser;
 import jakarta.servlet.http.HttpServletRequest;
@@ -74,7 +75,7 @@ public class WxUserServiceImpl implements WxUserService {
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public CommonResult<LoginResponse> miniLogin(String code) {
+	public CommonResult<LoginResponse> miniLogin(String code,HttpServletRequest request) {
 		try {
 			WxMaJscode2SessionResult jscode2session = getWxService().jsCode2SessionInfo(code);
 			if (ObjectUtil.isNull(jscode2session)) {
@@ -91,15 +92,20 @@ public class WxUserServiceImpl implements WxUserService {
 				douUser.setPassword(md5(username)); // 使用 MD5 加密
 				douUser.setCreateTime(new Date());
 				douUser.setUpdateTime(new Date());
+				var ip = DouUtils.getClientIp(request);
+				douUser.setRegisterIp(ip);
+				douUser.setLoginIp(ip);
 				//douUser.setSessionKey(jscode2session.getSessionKey());
 				//douUser.setUnionId(jscode2session.getUnionid());
 				douUserService.save(douUser);
 			} else {
+				var updateDouUser = new DouUser();
+				updateDouUser.setLastLoginIp(douUser.getLoginIp());
+				updateDouUser.setLoginIp(DouUtils.getClientIp(request));
+				updateDouUser.setUpdateTime(new Date());
+				updateDouUser.setId(douUser.getId());
 				//更新SessionKey
-				//douUser.setOpenId(jscode2session.getOpenid());
-				//douUser.setSessionKey(jscode2session.getSessionKey());
-				//douUser.setUnionId(jscode2session.getUnionid());
-				//this.updateById(douUser);
+				douUserService.updateById(updateDouUser);
 			}
 			LoginDouUser loginDouUser = new LoginDouUser();
 			loginDouUser.setWxOpenid(douUser.getWxOpenid());
