@@ -34,7 +34,6 @@ public class DouUtils {
 	public static String getClientIp(HttpServletRequest request) {
 		String ip = request.getHeader("X-Real-IP");
 		if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
-			// X-Forwarded-For 可能返回多个 IP，取第一个非 unknown 的
 			return ip.split(",")[0].trim();
 		}
 		
