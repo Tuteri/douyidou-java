@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.service.domain.DouUser;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 应用用户Mapper接口
@@ -11,6 +12,7 @@ import com.ruoyi.service.domain.DouUser;
  * @author Tuteri
  * @date 2025-03-20
  */
+@Mapper
 public interface DouUserMapper extends BaseMapper<DouUser>
 {
     /**
