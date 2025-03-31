@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class ApiClient {
     private final String appId;
@@ -18,7 +19,11 @@ public class ApiClient {
         this.appId = appId;
         this.appSecret = appSecret;
         this.baseUrl = baseUrl;
-        this.client = new OkHttpClient();
+        this.client = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS)  // 连接超时
+                .readTimeout(20, TimeUnit.SECONDS)     // 读取超时
+                .writeTimeout(20, TimeUnit.SECONDS)    // 写入超时
+                .build();
         this.objectMapper = new ObjectMapper();
     }
     
@@ -97,7 +102,7 @@ public class ApiClient {
     private Map<String, Object> sendGetRequest(String endpoint, Map<String, String> params) throws Exception {
         Map<String, String> data = new HashMap<>(params);
         data.put("app_id", appId);
-
+        
         String sign = getSign(data);
         HttpUrl.Builder urlBuilder = HttpUrl.parse(baseUrl + endpoint).newBuilder();
         data.forEach(urlBuilder::addQueryParameter);

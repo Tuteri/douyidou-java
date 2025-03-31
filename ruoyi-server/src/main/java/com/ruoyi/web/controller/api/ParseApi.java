@@ -1,16 +1,12 @@
 package com.ruoyi.web.controller.api;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.github.pagehelper.PageInfo;
-import com.mchange.lang.LongUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.service.common.PageResult;
 import com.ruoyi.service.common.request.PageParamRequest;
 import com.ruoyi.service.common.response.CommonResult;
 import com.ruoyi.service.common.response.parse.DouParseResponse;
 import com.ruoyi.service.common.response.parse.TranscodeResponse;
-import com.ruoyi.service.common.response.parse.TranscodeResponse;
-import com.ruoyi.service.common.response.parse.VideoParseResponse;
 import com.ruoyi.service.domain.DouParse;
 import com.ruoyi.service.domain.DouTranslate;
 import com.ruoyi.service.exception.DouException;
@@ -19,8 +15,6 @@ import com.ruoyi.service.service.IDouTranslateService;
 import com.ruoyi.service.service.ParseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/parse")

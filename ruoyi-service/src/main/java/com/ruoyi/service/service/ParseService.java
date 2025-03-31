@@ -111,7 +111,7 @@ public class ParseService {
 			douTranslate.setType(1);
 			
 			// 自定义任务名
-			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : douTranslate.getTask().replaceAll("-","");
+			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : transcodeResponse.getTask().replaceAll("-","");
 			if(name.length()>10){
 				name = name.substring(0,10);
 			}
@@ -144,7 +144,7 @@ public class ParseService {
 			douTranslate.setType(2);
 			
 			// 自定义任务名
-			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : douTranslate.getTask().replaceAll("-","");
+			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : transcodeResponse.getTask().replaceAll("-","");
 			if(name.length()>10){
 				name = name.substring(0,10);
 			}
@@ -177,7 +177,7 @@ public class ParseService {
 			douTranslate.setType(3);
 			
 			// 自定义任务名
-			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : douTranslate.getTask().replaceAll("-","");
+			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : transcodeResponse.getTask().replaceAll("-","");
 			if(name.length()>10){
 				name = name.substring(0,10);
 			}
