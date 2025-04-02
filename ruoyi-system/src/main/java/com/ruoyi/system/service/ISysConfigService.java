@@ -1,6 +1,9 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+import java.util.Map;
+
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.system.domain.SysConfig;
 
 /**
@@ -10,6 +13,18 @@ import com.ruoyi.system.domain.SysConfig;
  */
 public interface ISysConfigService
 {
+    /**
+     * 查询小程序配置信息
+     *
+     * @return 参数配置信息
+     */
+    public List<SysConfig> routine();
+    /**
+     * 保存小程序配置信息
+     *
+     * @return 参数配置信息
+     */
+    public Boolean routineSave(List<SysConfig> request);
     /**
      * 查询参数配置信息
      * 

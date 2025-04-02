@@ -1,12 +1,14 @@
 package com.ruoyi.service.service;
 
 import com.ruoyi.service.common.response.CommonResult;
+import com.ruoyi.system.domain.SysConfig;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.impl.SysConfigServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -14,9 +16,15 @@ public class DouConfigService {
 	@Autowired
 	ISysConfigService configService;
 	public CommonResult<Map<String,Object>> getRoutine(){
-		String notice = configService.selectConfigByKey("routine.notice");
+		List<SysConfig> routine = configService.routine();
 		Map<String, Object> map = new HashMap<>();
-		map.put("notice",notice);
+		routine.forEach(config -> {
+			String name = config.getConfigKey().substring(8);
+			System.out.println(name);
+			if(!"app_id".equals(name) && !"app_secret".equals(name)){
+				map.put(name, config.getConfigValue());
+			}
+		});
 		return CommonResult.success(map);
 	}
 }

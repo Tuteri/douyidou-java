@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+import java.util.Map;
+
+import com.ruoyi.service.common.response.CommonResult;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,7 +36,25 @@ public class SysConfigController extends BaseController
 {
     @Autowired
     private ISysConfigService configService;
-
+    /**
+     * 获取小程序配置列表
+     */
+    @PreAuthorize("@ss.hasPermi('system:config:routine')")
+    @GetMapping("/routine")
+    public CommonResult<List<SysConfig>> routine()
+    {
+        return CommonResult.success(configService.routine());
+    }
+    /**
+     * 获取小程序配置列表
+     */
+    @PreAuthorize("@ss.hasPermi('system:config:routine')")
+    @PostMapping("/routine/save")
+    public CommonResult<String> routineSave(@RequestBody List<SysConfig> request)
+    {
+        configService.routineSave(request);
+        return CommonResult.success();
+    }
     /**
      * 获取参数配置列表
      */

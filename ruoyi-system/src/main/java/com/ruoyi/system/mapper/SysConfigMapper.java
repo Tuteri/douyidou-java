@@ -1,15 +1,22 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.system.domain.SysConfig;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * 参数配置 数据层
  * 
  * @author ruoyi
  */
+@Mapper
 public interface SysConfigMapper
 {
+    @Select("SELECT * FROM sys_config WHERE config_key LIKE 'routine.%'")
+    List<SysConfig> selectRoutineData();
     /**
      * 查询参数配置信息
      * 
