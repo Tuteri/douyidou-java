@@ -31,6 +31,6 @@ public class WebConfig implements WebMvcConfigurer {
 		 */
 		registry.addInterceptor(getDouUserAuthenticationInterceptor())
 				.addPathPatterns("/api/**")//拦截/api/**接口
-				.excludePathPatterns("/api/miniLogin","/api/refreshToken");//放行接口
+				.excludePathPatterns("/api/miniLogin","/api/refreshToken","/api/f/**");//放行接口
 	}
 }
