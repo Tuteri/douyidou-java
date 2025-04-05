@@ -30,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="source != null  and source != ''"> and source = #{source}</if>
             <if test="type != null "> and type = #{type}</if>
         </where>
+        order By id Desc
     </select>
     
     <select id="selectDouRewardById" parameterType="Long" resultMap="DouRewardResult">
