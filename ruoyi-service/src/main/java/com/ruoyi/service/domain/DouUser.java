@@ -60,11 +60,21 @@ public class DouUser extends BaseEntity
     @Excel(name = "注册ip")
     private String registerIp;
     /** 登录ip */
-    @Excel(name = "登录ip")
     private String loginIp;
     /** 上次登录ip */
-    @Excel(name = "上次登录ip")
     private String lastLoginIp;
+    /** 用户等级 */
+    @Excel(name = "用户等级")
+    private Integer level;
+    /** 解析/下载/转码次数 */
+    @Excel(name = "解析/下载/转码次数")
+    private Integer parseNum;
+    /** tokens */
+    @Excel(name = "tokens")
+    private Integer tokens;
+    /** 临时可用 解析/下载/转码次数 */
+    @Excel(name = "临时可用 解析/下载/转码次数")
+    private Integer parseNumTemp;
     
     @TableField(exist = false)
     private String searchValue;

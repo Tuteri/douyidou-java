@@ -19,11 +19,10 @@ import com.ruoyi.service.domain.DouParse;
 public interface IDouParseService extends IService<DouParse>
 {
     CommonResult<DouParseResponse> getInfo(DouParse douParseRequest);
-    
+    Long getTodayCount();
     /**
      * 查询视频解析记录
      *
-     * @param id 视频解析记录主键
      * @return 视频解析记录
      */
     public PageResult<DouParseResponse> getListByUser(DouParse douParse, PageParamRequest pageParamRequest);

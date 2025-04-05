@@ -16,10 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="registerIp"    column="register_ip"    />
         <result property="loginIp"    column="login_ip"    />
         <result property="lastLoginIp"    column="last_login_ip"    />
+        <result property="level"    column="level"    />
+        <result property="parseNum"    column="parse_num"    />
+        <result property="tokens"    column="tokens"    />
     </resultMap>
 
     <sql id="selectDouUserVo">
-        select id, wx_name, wx_openid, username, password, update_time, create_time, avatar,register_ip,login_ip,last_login_ip from dou_user
+        select id, wx_name, wx_openid, username, password, update_time, create_time, avatar,register_ip,login_ip,last_login_ip,level,parseNum,tokens from dou_user
     </sql>
 
     <select id="selectDouUserList" parameterType="DouUser" resultMap="DouUserResult">

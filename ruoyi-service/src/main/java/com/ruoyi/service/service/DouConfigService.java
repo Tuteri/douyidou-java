@@ -20,7 +20,6 @@ public class DouConfigService {
 		Map<String, Object> map = new HashMap<>();
 		routine.forEach(config -> {
 			String name = config.getConfigKey().substring(8);
-			System.out.println(name);
 			if(!"app_id".equals(name) && !"app_secret".equals(name)){
 				map.put(name, config.getConfigValue());
 			}

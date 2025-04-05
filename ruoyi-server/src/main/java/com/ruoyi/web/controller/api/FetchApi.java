@@ -19,12 +19,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
-public class FetchController {
+public class FetchApi {
 	
-	private final OkHttpClient httpClient = new OkHttpClient.Builder()
-			.followRedirects(true)
-			.followSslRedirects(true)
-			.build();
 	
 	@GetMapping(value = {"f","f/{filename}"})
 	public void fetch(
@@ -51,9 +47,12 @@ public class FetchController {
 				sendJsonError(response, HttpStatus.BAD_REQUEST, "Invalid Host");
 				return;
 			}
-			
-			Request.Builder requestBuilder = new Request.Builder().url(decodedUrl)
-					.addHeader(HttpHeaders.HOST, host);
+			OkHttpClient httpClient = new OkHttpClient.Builder()
+					.followRedirects(true)
+					.followSslRedirects(true)
+					.build();
+			Request.Builder requestBuilder = new Request.Builder().url(decodedUrl);
+					//.addHeader(HttpHeaders.HOST, host);
 			
 			if (platform == 4) { // 微博
 				String ua = request.getHeader(HttpHeaders.USER_AGENT);
@@ -76,6 +75,8 @@ public class FetchController {
 			
 			try (Response okhttpResponse = httpClient.newCall(requestBuilder.build()).execute()) {
 				if (!okhttpResponse.isSuccessful() || okhttpResponse.body() == null) {
+					System.out.println(decodedUrl);
+					System.out.println(okhttpResponse);
 					sendJsonError(response, HttpStatus.INTERNAL_SERVER_ERROR, "Request failed");
 					return;
 				}

@@ -17,11 +17,27 @@ public interface IDouUserService extends IService<DouUser> {
 	/**
 	 * 查询应用用户
 	 *
-	 * @param id 应用用户主键
+	 * @param openid wxOpenid
 	 * @return 应用用户
 	 */
 	public DouUser findByWxOpenid(String openid);
-	DouUserResponse getInfo();
+	/**
+	 * parseNum消费 -1 常用于解析/下载/转码等
+	 * @return 应用用户
+	 */
+	public Boolean parseNumConsumer(Integer type);
+	/**
+	 * 登录用户信息
+	 * @return
+	 */
+	public DouUserResponse getInfo();
+	
+	boolean checkParse(DouUser updateDouUser);
+	
+	/**
+	 * 用户看广告 奖励下发
+	 */
+	public void reward();
 	
 	/**
 	 * 查询应用用户

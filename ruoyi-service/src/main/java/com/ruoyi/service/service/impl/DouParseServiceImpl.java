@@ -2,8 +2,10 @@ package com.ruoyi.service.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -54,6 +56,17 @@ public class DouParseServiceImpl extends ServiceImpl<DouParseMapper, DouParse> i
         }
         PageResult<DouParseResponse> douParseResponsePageInfo = PageResult.restPage(pageInfo, douParseResponseList);
         return douParseResponsePageInfo;
+    }
+    
+    /**
+     * 获取今日解析数量
+     * @return
+     */
+    @Override
+    public Long getTodayCount() {
+        LambdaQueryWrapper<DouParse> lqw = getLqw();
+        lqw.between(DouParse::getCreateTime, DateUtil.beginOfDay(new Date()), DateUtil.endOfDay(new Date()));
+        return count(lqw);
     }
     
     @Override

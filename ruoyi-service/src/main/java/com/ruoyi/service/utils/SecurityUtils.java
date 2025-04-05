@@ -12,4 +12,8 @@ public class SecurityUtils {
 		LoginDouUser loginDouUser = (LoginDouUser) authentication.getPrincipal();
 		return loginDouUser;
 	}
+	public static Long getLoginDouUserId() {
+		
+		return getLoginDouUser().getUser().getId();
+	}
 }

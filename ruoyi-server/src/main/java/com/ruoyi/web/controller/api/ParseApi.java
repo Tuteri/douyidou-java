@@ -13,6 +13,7 @@ import com.ruoyi.service.exception.DouException;
 import com.ruoyi.service.service.IDouParseService;
 import com.ruoyi.service.service.IDouTranslateService;
 import com.ruoyi.service.service.ParseService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +28,11 @@ public class ParseApi {
 	@Autowired
 	IDouParseService douParseService;
 	@GetMapping("url")
-	public CommonResult<DouParseResponse> url(@RequestParam String url){
+	public CommonResult<DouParseResponse> url(@RequestParam String url, HttpServletRequest request){
 		if(StringUtils.isNull(url) || StringUtils.isEmpty(url) || StringUtils.isBlank(url)){
 			throw new DouException("URL不能为空");
 		}
-		return parseService.url(url);
+		return parseService.make(url,request);
 	}
 	@GetMapping("url/list")
 	public CommonResult<PageResult<DouParseResponse>> urlList(DouParse douParse, PageParamRequest pageParamRequest){

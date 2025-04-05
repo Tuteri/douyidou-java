@@ -1,5 +1,7 @@
 package com.ruoyi.service.service;
 
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -14,16 +16,22 @@ import com.ruoyi.service.common.response.parse.TranscodeResponse;
 import com.ruoyi.service.common.response.parse.DouParseResponse;
 import com.ruoyi.service.common.response.parse.VideoParseResponse;
 import com.ruoyi.service.domain.DouParse;
+import com.ruoyi.service.domain.DouReward;
 import com.ruoyi.service.domain.DouTranslate;
+import com.ruoyi.service.domain.DouUser;
 import com.ruoyi.service.exception.DouException;
+import com.ruoyi.service.exception.ExceptionCodeEnum;
+import com.ruoyi.service.exception.ExceptionHandler;
 import com.ruoyi.service.utils.DouUtils;
 import com.ruoyi.service.utils.SecurityUtils;
 import com.ruoyi.system.service.ISysConfigService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.bouncycastle.oer.its.etsi102941.Url;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +39,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-@Service
+@Component
 public class ParseService {
 	private final Logger logger = LoggerFactory.getLogger(ParseService.class);
 	@Autowired
@@ -40,7 +48,40 @@ public class ParseService {
 	IDouTranslateService translateService;
 	@Autowired
 	IDouParseService douParseService;
-	public CommonResult<DouParseResponse> url(String url) {
+	@Autowired
+	IDouUserService douUserService;
+	@Autowired
+	ProxyService proxyService;
+	@Autowired
+	IDouRewardService douRewardService;
+	
+	/**
+	 * 解析服务
+	 *
+	 * @param url
+	 * @param request
+	 * @return
+	 */
+	
+	
+	@Transactional(rollbackFor = Exception.class)
+	public CommonResult<DouParseResponse> make(String url, HttpServletRequest request) {
+		
+		
+		DouUser douUser = SecurityUtils.getLoginDouUser().getUser();
+		DouUser updateDouUser = new DouUser();
+		
+		
+		updateDouUser.setId(douUser.getId());
+		updateDouUser.setUpdateTime(DateUtil.date());
+		//Integer parseNumTemp = douUser.getParseNumTemp() - 1;
+		//updateDouUser.setParseNumTemp(parseNumTemp);
+		//douUserService.updateById(updateDouUser);
+		boolean checkParse = douUserService.checkParse(updateDouUser);
+		if(!checkParse){
+			return CommonResult.failed("请先观看广告");
+		}
+		
 		try {
 			String hash = DouUtils.md5(url);
 			//DouParse findDouParse = douParseService.findByHash(hash);
@@ -59,7 +100,7 @@ public class ParseService {
 			//	return CommonResult.success(douParseResponse);
 			//}
 			
-
+			
 			douParseService.save(douParse);
 			Long id = douParse.getId();
 			ApiClient apiClient = getApiClient();
@@ -70,8 +111,9 @@ public class ParseService {
 			}
 			//String jsonString = JSONObject.toJSONString(res.get("data"));
 			JSONObject data = JSONObject.from(res.get("data"));
+			proxyService.make(data, request);
 			DouParseResponse videoParseResponse = data.toJavaObject(DouParseResponse.class);
-			BeanUtils.copyProperties(videoParseResponse,douParse);
+			BeanUtils.copyProperties(videoParseResponse, douParse);
 			douParse.setPlatform(videoParseResponse.getPlatform());
 			douParse.setVideo(JSONObject.toJSONString(videoParseResponse.getVideo()));
 			douParse.setAudio(JSONObject.toJSONString(videoParseResponse.getAudio()));
@@ -81,6 +123,8 @@ public class ParseService {
 			douParse.setUpdateTime(new Date());
 			douParse.setId(id);
 			douParseService.updateById(douParse);
+			douUserService.updateById(updateDouUser);
+			
 			DouParseResponse douParseResponse = new DouParseResponse(douParse);
 			return CommonResult.success(douParseResponse);
 		} catch (Exception e) {
@@ -111,13 +155,13 @@ public class ParseService {
 			douTranslate.setType(1);
 			
 			// 自定义任务名
-			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : transcodeResponse.getTask().replaceAll("-","");
-			if(name.length()>10){
-				name = name.substring(0,10);
+			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : transcodeResponse.getTask().replaceAll("-", "");
+			if (name.length() > 10) {
+				name = name.substring(0, 10);
 			}
 			douTranslate.setName(name);
 			translateService.insertOne(douTranslate, transcodeResponse);
-			BeanUtils.copyProperties(douTranslate,transcodeResponse);
+			BeanUtils.copyProperties(douTranslate, transcodeResponse);
 			transcodeResponse.setStats(douTranslate.getStatus());
 			return CommonResult.success(transcodeResponse);
 		} catch (Exception e) {
@@ -125,6 +169,7 @@ public class ParseService {
 			return CommonResult.failed("任务失败");
 		}
 	}
+	
 	public CommonResult<TranscodeResponse> videoMd5(DouTranslate translate) {
 		try {
 			String url = translate.getUrl();
@@ -144,13 +189,13 @@ public class ParseService {
 			douTranslate.setType(2);
 			
 			// 自定义任务名
-			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : transcodeResponse.getTask().replaceAll("-","");
-			if(name.length()>10){
-				name = name.substring(0,10);
+			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : transcodeResponse.getTask().replaceAll("-", "");
+			if (name.length() > 10) {
+				name = name.substring(0, 10);
 			}
 			douTranslate.setName(name);
 			translateService.insertOne(douTranslate, transcodeResponse);
-			BeanUtils.copyProperties(douTranslate,transcodeResponse);
+			BeanUtils.copyProperties(douTranslate, transcodeResponse);
 			transcodeResponse.setStats(douTranslate.getStatus());
 			return CommonResult.success(transcodeResponse);
 		} catch (Exception e) {
@@ -158,6 +203,7 @@ public class ParseService {
 			return CommonResult.failed("任务失败");
 		}
 	}
+	
 	public CommonResult<TranscodeResponse> videoToMp3(DouTranslate translate) {
 		try {
 			String url = translate.getUrl();
@@ -177,13 +223,13 @@ public class ParseService {
 			douTranslate.setType(3);
 			
 			// 自定义任务名
-			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : transcodeResponse.getTask().replaceAll("-","");
-			if(name.length()>10){
-				name = name.substring(0,10);
+			String name = StringUtils.isNotEmpty(translate.getName()) ? translate.getName() : transcodeResponse.getTask().replaceAll("-", "");
+			if (name.length() > 10) {
+				name = name.substring(0, 10);
 			}
 			douTranslate.setName(name);
 			translateService.insertOne(douTranslate, transcodeResponse);
-			BeanUtils.copyProperties(douTranslate,transcodeResponse);
+			BeanUtils.copyProperties(douTranslate, transcodeResponse);
 			transcodeResponse.setStats(douTranslate.getStatus());
 			return CommonResult.success(transcodeResponse);
 		} catch (Exception e) {
@@ -191,33 +237,34 @@ public class ParseService {
 			return CommonResult.failed("任务失败");
 		}
 	}
+	
 	/**
 	 * 查询全部的任务状态
 	 */
 	public void transcodeStatsTask() {
 		LambdaQueryWrapper<DouTranslate> lqw = new LambdaQueryWrapper<>();
-		lqw.in(DouTranslate::getStatus, Arrays.asList(-1,0,1));
+		lqw.in(DouTranslate::getStatus, Arrays.asList(-1, 0, 1));
 		lqw.orderByAsc(DouTranslate::getId);
 		List<DouTranslate> list = translateService.list(lqw);
 		for (DouTranslate douTranslate : list) {
 			try {
 				TranscodeResponse transcodeResponse;
-				if(douTranslate.getType() == 1){
+				if (douTranslate.getType() == 1) {
 					transcodeResponse = getTranscodeStats(douTranslate.getTask());
-				}else if(douTranslate.getType() == 2){
+				} else if (douTranslate.getType() == 2) {
 					transcodeResponse = getVideoMd5Stats(douTranslate.getTask());
-				}else if(douTranslate.getType() == 3){
+				} else if (douTranslate.getType() == 3) {
 					transcodeResponse = getVideoToMp3Stats(douTranslate.getTask());
-				}else {
+				} else {
 					break;
 				}
 				Integer stats = transcodeResponse.getStats();
 				
-				switch (stats){
+				switch (stats) {
 					// 等待中
 					case 0:
 						continue;
-					// 转码中
+						// 转码中
 					case 1:
 						douTranslate.setSize(transcodeResponse.getSize());
 						break;
@@ -225,9 +272,9 @@ public class ParseService {
 					case 2:
 						douTranslate.setSize(transcodeResponse.getSize());
 						douTranslate.setDownloadUrl(transcodeResponse.getUrl());
-					// 失败
+						// 失败
 					case 3:
-					// 终止
+						// 终止
 					case 4:
 						douTranslate.setDoneTime(new Date());
 						break;
@@ -236,12 +283,13 @@ public class ParseService {
 				douTranslate.setTargetTime(transcodeResponse.getTime());
 				translateService.updateById(douTranslate);
 				
-			}catch (DouException e){
+			} catch (DouException e) {
 				e.printStackTrace();
 			}
 			
 		}
 	}
+	
 	public TranscodeResponse getTranscodeStats(String task) {
 		try {
 			ApiClient apiClient = getApiClient();
@@ -258,6 +306,7 @@ public class ParseService {
 			throw new DouException("获取任务信息失败");
 		}
 	}
+	
 	public TranscodeResponse getVideoMd5Stats(String task) {
 		try {
 			ApiClient apiClient = getApiClient();
@@ -274,6 +323,7 @@ public class ParseService {
 			throw new DouException("获取任务信息失败");
 		}
 	}
+	
 	public TranscodeResponse getVideoToMp3Stats(String task) {
 		try {
 			ApiClient apiClient = getApiClient();
@@ -290,6 +340,7 @@ public class ParseService {
 			throw new DouException("获取任务信息失败");
 		}
 	}
+	
 	@Transactional(rollbackFor = Exception.class)
 	public CommonResult<TranscodeResponse> stopTranscode(String task) {
 		try {
