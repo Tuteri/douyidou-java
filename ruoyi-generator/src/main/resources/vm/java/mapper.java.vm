@@ -5,6 +5,8 @@ import ${packageName}.domain.${ClassName};
 #if($table.sub)
 import ${packageName}.domain.${subClassName};
 #end
+import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * ${functionName}Mapper接口
@@ -12,7 +14,8 @@ import ${packageName}.domain.${subClassName};
  * @author ${author}
  * @date ${datetime}
  */
-public interface ${ClassName}Mapper 
+@Mapper
+public interface ${ClassName}Mapper extends BaseMapper<${ClassName}>
 {
     /**
      * 查询${functionName}
