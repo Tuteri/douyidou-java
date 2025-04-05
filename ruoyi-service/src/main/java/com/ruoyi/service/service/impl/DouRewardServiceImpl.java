@@ -102,17 +102,17 @@ public class DouRewardServiceImpl extends ServiceImpl<DouRewardMapper, DouReward
 			}
 			
 		} else if (type == 1 || type == 2 || type == 3 || type == 4) {
+			douReward.setProactive(0);
 			// 已开启次数奖励
 			if (adRewardParseNumStatus) {
 				douReward.setParseNum(adRewardParseNum);
-				douReward.setProactive(0);
 				DouUser douUser = new DouUser();
 				douUser.setId(user.getId());
-				douUser.setParseNumTemp(user.getParseNumTemp() + adRewardParseNum);
+				douUser.setParseNumTemp(adRewardParseNum);
 				douUserMapper.updateById(douUser);
-			} else {
-				return null;
 			}
+		}else {
+			return null;
 		}
 		douReward.setAdId(adId);
 		douReward.setType(type);
