@@ -1,5 +1,6 @@
 package com.ruoyi.service.domain;
 
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -11,7 +12,8 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author Tuteri
  * @date 2025-03-23
  */
-public class DouPlatform extends BaseEntity
+@Data
+public class DouPlatform extends DouBase
 {
     private static final long serialVersionUID = 1L;
 
@@ -37,78 +39,4 @@ public class DouPlatform extends BaseEntity
     /** 权重 */
     @Excel(name = "权重")
     private Integer weight;
-
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
-
-    public Long getId() 
-    {
-        return id;
-    }
-
-    public void setName(String name) 
-    {
-        this.name = name;
-    }
-
-    public String getName() 
-    {
-        return name;
-    }
-
-    public void setIcon(String icon) 
-    {
-        this.icon = icon;
-    }
-
-    public String getIcon() 
-    {
-        return icon;
-    }
-
-    public void setDescription(String description) 
-    {
-        this.description = description;
-    }
-
-    public String getDescription() 
-    {
-        return description;
-    }
-
-    public void setStatus(Integer status) 
-    {
-        this.status = status;
-    }
-
-    public Integer getStatus() 
-    {
-        return status;
-    }
-
-    public void setWeight(Integer weight) 
-    {
-        this.weight = weight;
-    }
-
-    public Integer getWeight() 
-    {
-        return weight;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("name", getName())
-            .append("icon", getIcon())
-            .append("description", getDescription())
-            .append("status", getStatus())
-            .append("weight", getWeight())
-            .append("createTime", getCreateTime())
-            .append("updateTime", getUpdateTime())
-            .toString();
-    }
 }

@@ -20,7 +20,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @date 2025-03-20
  */
 @Data
-public class DouUser extends BaseEntity
+public class DouUser extends DouBase
 {
     private static final long serialVersionUID = 1L;
 
@@ -76,14 +76,4 @@ public class DouUser extends BaseEntity
     @Excel(name = "临时可用 解析/下载/转码次数")
     private Integer parseNumTemp;
     
-    @TableField(exist = false)
-    private String searchValue;
-    @TableField(exist = false)
-    private String createBy;
-    @TableField(exist = false)
-    private String updateBy;
-    @TableField(exist = false)
-    private String remark;
-    @TableField(exist = false)
-    private Map<String, Object> params;
 }

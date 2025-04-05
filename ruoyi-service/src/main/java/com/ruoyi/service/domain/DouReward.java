@@ -16,7 +16,7 @@ import java.util.Map;
  * @date 2025-04-04
  */
 @Data
-public class DouReward extends BaseEntity
+public class DouReward extends DouBase
 {
     private static final long serialVersionUID = 1L;
 
@@ -51,14 +51,4 @@ public class DouReward extends BaseEntity
     @Excel(name = "是否为主动")
     private Integer proactive;
     
-    @TableField(exist = false)
-    private String searchValue;
-    @TableField(exist = false)
-    private String createBy;
-    @TableField(exist = false)
-    private String updateBy;
-    @TableField(exist = false)
-    private String remark;
-    @TableField(exist = false)
-    private Map<String, Object> params;
 }

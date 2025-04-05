@@ -20,7 +20,7 @@ import java.util.Map;
  * @date 2025-03-20
  */
 @Data
-public class DouTranslate extends BaseEntity
+public class DouTranslate extends DouBase
 {
     private static final long serialVersionUID = 1L;
 
@@ -83,16 +83,4 @@ public class DouTranslate extends BaseEntity
     @Excel(name = "完成时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date doneTime;
     
-    
-    
-    @TableField(exist = false)
-    private String searchValue;
-    @TableField(exist = false)
-    private String createBy;
-    @TableField(exist = false)
-    private String updateBy;
-    @TableField(exist = false)
-    private String remark;
-    @TableField(exist = false)
-    private Map<String, Object> params;
 }

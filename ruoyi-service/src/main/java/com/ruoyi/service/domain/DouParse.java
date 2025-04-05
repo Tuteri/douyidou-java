@@ -18,7 +18,7 @@ import java.util.Map;
  * @date 2025-03-23
  */
 @Data
-public class DouParse extends BaseEntity
+public class DouParse extends DouBase
 {
     private static final long serialVersionUID = 1L;
 
@@ -78,15 +78,4 @@ public class DouParse extends BaseEntity
     @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date updateTime;
     
-    
-    @TableField(exist = false)
-    private String searchValue;
-    @TableField(exist = false)
-    private String createBy;
-    @TableField(exist = false)
-    private String updateBy;
-    @TableField(exist = false)
-    private String remark;
-    @TableField(exist = false)
-    private Map<String, Object> params;
 }
