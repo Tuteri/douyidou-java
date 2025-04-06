@@ -66,23 +66,15 @@ public class ParseService {
 	
 	@Transactional(rollbackFor = Exception.class)
 	public CommonResult<DouParseResponse> make(String url, HttpServletRequest request) {
-		
-		
-		DouUser douUser = SecurityUtils.getLoginDouUser().getUser();
-		DouUser updateDouUser = new DouUser();
-		
-		
-		updateDouUser.setId(douUser.getId());
-		updateDouUser.setUpdateTime(DateUtil.date());
-		//Integer parseNumTemp = douUser.getParseNumTemp() - 1;
-		//updateDouUser.setParseNumTemp(parseNumTemp);
-		//douUserService.updateById(updateDouUser);
-		boolean checkParse = douUserService.checkParse(updateDouUser);
-		if(!checkParse){
-			return CommonResult.failed("请先观看广告");
-		}
-		
 		try {
+			DouUser douUser = SecurityUtils.getLoginDouUser().getUser();
+			DouUser updateDouUser = new DouUser();
+			updateDouUser.setId(douUser.getId());
+			updateDouUser.setUpdateTime(DateUtil.date());
+			boolean checkParse = douUserService.checkParse(updateDouUser);
+			if(!checkParse){
+				return CommonResult.failed("请先观看广告");
+			}
 			String hash = DouUtils.md5(url);
 			//DouParse findDouParse = douParseService.findByHash(hash);
 			DouParse douParse = new DouParse();
@@ -135,6 +127,14 @@ public class ParseService {
 	
 	public CommonResult<TranscodeResponse> transcode(DouTranslate translate) {
 		try {
+			DouUser douUser = SecurityUtils.getLoginDouUser().getUser();
+			DouUser updateDouUser = new DouUser();
+			updateDouUser.setId(douUser.getId());
+			updateDouUser.setUpdateTime(DateUtil.date());
+			boolean checkParse = douUserService.checkParse(updateDouUser);
+			if(!checkParse){
+				return CommonResult.failed("请先观看广告");
+			}
 			String url = translate.getUrl();
 			String ext = DouUtils.getUrlExt(url);
 			if (!ext.equals(".m3u8")) {
@@ -161,6 +161,7 @@ public class ParseService {
 			}
 			douTranslate.setName(name);
 			translateService.insertOne(douTranslate, transcodeResponse);
+			douUserService.updateById(updateDouUser);
 			BeanUtils.copyProperties(douTranslate, transcodeResponse);
 			transcodeResponse.setStats(douTranslate.getStatus());
 			return CommonResult.success(transcodeResponse);
@@ -172,6 +173,15 @@ public class ParseService {
 	
 	public CommonResult<TranscodeResponse> videoMd5(DouTranslate translate) {
 		try {
+			
+			DouUser douUser = SecurityUtils.getLoginDouUser().getUser();
+			DouUser updateDouUser = new DouUser();
+			updateDouUser.setId(douUser.getId());
+			updateDouUser.setUpdateTime(DateUtil.date());
+			boolean checkParse = douUserService.checkParse(updateDouUser);
+			if(!checkParse){
+				return CommonResult.failed("请先观看广告");
+			}
 			String url = translate.getUrl();
 			String ext = DouUtils.getUrlExt(url);
 			ApiClient apiClient = getApiClient();
@@ -195,6 +205,7 @@ public class ParseService {
 			}
 			douTranslate.setName(name);
 			translateService.insertOne(douTranslate, transcodeResponse);
+			douUserService.updateById(updateDouUser);
 			BeanUtils.copyProperties(douTranslate, transcodeResponse);
 			transcodeResponse.setStats(douTranslate.getStatus());
 			return CommonResult.success(transcodeResponse);
@@ -206,6 +217,15 @@ public class ParseService {
 	
 	public CommonResult<TranscodeResponse> videoToMp3(DouTranslate translate) {
 		try {
+			
+			DouUser douUser = SecurityUtils.getLoginDouUser().getUser();
+			DouUser updateDouUser = new DouUser();
+			updateDouUser.setId(douUser.getId());
+			updateDouUser.setUpdateTime(DateUtil.date());
+			boolean checkParse = douUserService.checkParse(updateDouUser);
+			if(!checkParse){
+				return CommonResult.failed("请先观看广告");
+			}
 			String url = translate.getUrl();
 			String ext = DouUtils.getUrlExt(url);
 			ApiClient apiClient = getApiClient();
@@ -229,6 +249,7 @@ public class ParseService {
 			}
 			douTranslate.setName(name);
 			translateService.insertOne(douTranslate, transcodeResponse);
+			douUserService.updateById(updateDouUser);
 			BeanUtils.copyProperties(douTranslate, transcodeResponse);
 			transcodeResponse.setStats(douTranslate.getStatus());
 			return CommonResult.success(transcodeResponse);
