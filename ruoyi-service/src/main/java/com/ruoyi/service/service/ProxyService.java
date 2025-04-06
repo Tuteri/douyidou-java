@@ -18,7 +18,7 @@ public class ProxyService {
 		return proxyUrl + "/api/f/" + UUID.randomUUID() + "?p=";
 	}
 	private void init(HttpServletRequest request) {
-		String domain = request.getHeader("Host");
+		String domain = request.getHeader("X-Host");
 		if (domain.contains("127.0.0.1") || domain.contains("192.168.1.34")) {
 			this.proxyUrl = "http://192.168.1.34:7999";
 		} else {
