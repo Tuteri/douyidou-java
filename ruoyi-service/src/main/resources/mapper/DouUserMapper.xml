@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectDouUserVo">
-        select id, wx_name, wx_openid, username, password, update_time, create_time, avatar,register_ip,login_ip,last_login_ip,level,parseNum,tokens from dou_user
+        select id, wx_name, wx_openid, username, password, update_time, create_time, avatar,register_ip,login_ip,last_login_ip,level,parse_num,tokens from dou_user
     </sql>
 
     <select id="selectDouUserList" parameterType="DouUser" resultMap="DouUserResult">
