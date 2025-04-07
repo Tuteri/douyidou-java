@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ruoyi.service.common.response.CommonResult;
 import com.ruoyi.service.common.response.user.DouUserResponse;
 import com.ruoyi.service.domain.DouReward;
 import com.ruoyi.service.domain.DouUser;
@@ -64,6 +65,10 @@ public class DouUserServiceImpl extends ServiceImpl<DouUserMapper, DouUser> impl
 		return true;
 	}
 	
+	/**
+	 * 获取个人信息
+	 * @return
+	 */
 	@Override
 	public DouUserResponse getInfo() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -168,6 +173,35 @@ public class DouUserServiceImpl extends ServiceImpl<DouUserMapper, DouUser> impl
 		}
 		return true;
 	}
+	
+	/**
+	 * tokens兑换parseNum
+	 *
+	 * @param douUserRequest 请求
+	 * @return CommonResult<Object>
+	 */
+	@Override
+	public CommonResult<Object> tokensToParseNum(DouUser douUserRequest) {
+		// 兑换的次数
+		Integer parseNum = douUserRequest.getParseNum();
+		if(parseNum<0){
+			return CommonResult.failed("无效的请求");
+		}
+		DouUser user = SecurityUtils.getLoginDouUser().getUser();
+		Integer tokens = user.getTokens();
+		// 解析比例
+		Integer tokensToParseNum = Integer.valueOf(sysConfigService.selectConfigByKey("routine.tokensToParseNum"));
+		// 消费tokens
+		var consumerTokens = parseNum * tokensToParseNum;
+		if(tokens < parseNum * tokensToParseNum) {
+			return CommonResult.failed("可用积分不足");
+		}
+		user.setTokens(user.getTokens()-consumerTokens);
+		user.setParseNum(user.getParseNum()+parseNum);
+		updateById(user);
+		return CommonResult.success("兑换成功");
+	}
+	
 	/**
 	 * 用户看广告 奖励下发
 	 */

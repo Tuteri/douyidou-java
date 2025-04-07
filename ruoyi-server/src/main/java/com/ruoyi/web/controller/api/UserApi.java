@@ -2,12 +2,10 @@ package com.ruoyi.web.controller.api;
 
 import com.ruoyi.service.common.response.CommonResult;
 import com.ruoyi.service.common.response.user.DouUserResponse;
+import com.ruoyi.service.domain.DouUser;
 import com.ruoyi.service.service.IDouUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.xml.transform.Result;
 
@@ -33,7 +31,7 @@ public class UserApi {
 	//}
 	
 	/**
-	 * 用户消费解析次数、
+	 * 用户消费解析次数
 	 * @return
 	 */
 	@GetMapping("user/consumer")
@@ -41,5 +39,12 @@ public class UserApi {
 		douUserService.parseNumConsumer(type);
 		return CommonResult.success();
 	}
-	
+	/**
+	 * 用户兑换解析次数
+	 * @return
+	 */
+	@PostMapping("user/tokensToParseNum")
+	public CommonResult<Object> tokensToParseNum(@RequestBody DouUser douUserRequest) {
+		return douUserService.tokensToParseNum(douUserRequest);
+	}
 }

@@ -3,6 +3,7 @@ package com.ruoyi.service.service;
 import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoyi.service.common.response.CommonResult;
 import com.ruoyi.service.common.response.user.DouUserResponse;
 import com.ruoyi.service.domain.DouUser;
 
@@ -33,7 +34,10 @@ public interface IDouUserService extends IService<DouUser> {
 	public DouUserResponse getInfo();
 	
 	boolean checkParse(DouUser updateDouUser);
-	
+	/**
+	 * tokens兑换parseNum
+	 */
+	public CommonResult<Object> tokensToParseNum(DouUser douUserRequest);
 	/**
 	 * 用户看广告 奖励下发
 	 */
