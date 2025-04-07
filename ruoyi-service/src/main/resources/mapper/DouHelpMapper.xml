@@ -27,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="expand != null "> and expand = #{expand}</if>
             <if test="status != null "> and status = #{status}</if>
         </where>
+        ORDER BY weight DESC
     </select>
     
     <select id="selectDouHelpById" parameterType="Long" resultMap="DouHelpResult">
