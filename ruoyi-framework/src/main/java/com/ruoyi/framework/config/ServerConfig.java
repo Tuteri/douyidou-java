@@ -1,5 +1,6 @@
 package com.ruoyi.framework.config;
 
+import cn.hutool.core.util.ObjectUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.utils.ServletUtils;
@@ -25,8 +26,14 @@ public class ServerConfig
 
     public static String getDomain(HttpServletRequest request)
     {
-        StringBuffer url = request.getRequestURL();
-        String contextPath = request.getServletContext().getContextPath();
-        return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(contextPath).toString();
+        String domain = request.getHeader("X-Host");
+        if(ObjectUtil.isNull(domain)) domain = request.getHeader("Host");
+        if (domain.contains("127.0.0.1") || domain.contains("192.168")) {
+            StringBuffer url = request.getRequestURL();
+            String contextPath = request.getServletContext().getContextPath();
+            return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(contextPath).toString();
+        } else {
+            return "https://"+domain;
+        }
     }
 }

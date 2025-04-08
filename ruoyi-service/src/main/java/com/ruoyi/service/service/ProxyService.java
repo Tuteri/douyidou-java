@@ -1,7 +1,9 @@
 package com.ruoyi.service.service;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.framework.config.ServerConfig;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -14,18 +16,14 @@ import java.util.UUID;
 public class ProxyService {
 	
 	private String proxyUrl;
+	@Autowired
+	private ServerConfig serverConfig;
 	
 	private String getPrefix() {
 		return proxyUrl + "/api/f/" + UUID.randomUUID() + "?p=";
 	}
 	private void init(HttpServletRequest request) {
-		String domain = request.getHeader("X-Host");
-		if(ObjectUtil.isNull(domain)) domain = request.getHeader("Host");
-		if (domain.contains("127.0.0.1") || domain.contains("192.168.1.34")) {
-			this.proxyUrl = "http://192.168.1.34:7999";
-		} else {
-			this.proxyUrl = "https://"+domain;
-		}
+		this.proxyUrl = serverConfig.getUrl();
 	}
 	
 	public Map<String, Object> make(Map<String, Object> arr,HttpServletRequest request) {

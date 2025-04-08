@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Objects;
+
+import com.ruoyi.common.utils.uuid.UUID;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.config.RuoYiConfig;
@@ -23,9 +25,9 @@ import com.ruoyi.common.utils.uuid.Seq;
 public class FileUploadUtils
 {
     /**
-     * 默认大小 50M
+     * 默认大小 200M
      */
-    public static final long DEFAULT_MAX_SIZE = 50 * 1024 * 1024L;
+    public static final long DEFAULT_MAX_SIZE = 200 * 1024 * 1024L;
 
     /**
      * 默认的文件名最大长度 100
@@ -122,8 +124,11 @@ public class FileUploadUtils
      */
     public static final String extractFilename(MultipartFile file)
     {
-        return StringUtils.format("{}/{}_{}.{}", DateUtils.datePath(),
-                FilenameUtils.getBaseName(file.getOriginalFilename()), Seq.getId(Seq.uploadSeqType), getExtension(file));
+        var uuid =  UUID.randomUUID().toString().replaceAll("-", "");
+        
+        return StringUtils.format("{}/{}.{}", DateUtils.datePath(),uuid, getExtension(file));
+        //return StringUtils.format("{}/{}_{}.{}", DateUtils.datePath(),
+        //        FilenameUtils.getBaseName(file.getOriginalFilename()), Seq.getId(Seq.uploadSeqType), getExtension(file));
     }
 
     public static final File getAbsoluteFile(String uploadDir, String fileName) throws IOException

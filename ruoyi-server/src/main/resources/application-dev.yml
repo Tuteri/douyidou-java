@@ -1,6 +1,6 @@
 ruoyi:
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: e:/ruoyi/upload
+  profile: E:\Desktop\douyidou\RuoYi-backend
 
 # 开发环境配置
 server:
