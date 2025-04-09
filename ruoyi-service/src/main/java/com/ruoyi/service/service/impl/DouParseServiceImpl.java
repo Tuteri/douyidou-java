@@ -52,6 +52,9 @@ public class DouParseServiceImpl extends ServiceImpl<DouParseMapper, DouParse> i
         ArrayList<DouParseResponse> douParseResponseList = new ArrayList<>();
         for (DouParse douParse : list) {
             DouParseResponse douParseResponse = new DouParseResponse(douParse);
+            douParseResponse.setVideo(null);
+            douParseResponse.setProxy(null);
+            douParseResponse.setOrigin(null);
             douParseResponseList.add(douParseResponse);
         }
         PageResult<DouParseResponse> douParseResponsePageInfo = PageResult.restPage(pageInfo, douParseResponseList);
