@@ -4,10 +4,11 @@ import lombok.Data;
 import cc.douyidou.common.annotation.Excel;
 
 /**
- * 激励广告奖励对象 dou_reward
- * 
+ * @probject douyidou
  * @author Tuteri
- * @date 2025-04-04
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
  */
 @Data
 public class DouReward extends DouBase

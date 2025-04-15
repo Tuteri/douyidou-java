@@ -38,10 +38,11 @@ import org.apache.ibatis.type.JdbcType;
 import java.time.LocalDateTime;
 
 /**
- * 微信用户
- *
- * @author www.joolun.com
- * @date 2019-03-25 15:39:39
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
  */
 @Data
 @TableName("wx_user")

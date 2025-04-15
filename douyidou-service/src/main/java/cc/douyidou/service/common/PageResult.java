@@ -1,3 +1,11 @@
+/**
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025-04-16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
+ */
+
 package cc.douyidou.service.common;
 
 import com.github.pagehelper.PageInfo;
@@ -6,6 +14,13 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
+ */
 @Data
 public class PageResult<T> {
 	private Integer page = 1;

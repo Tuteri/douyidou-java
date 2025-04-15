@@ -1,3 +1,11 @@
+/**
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025-04-16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
+ */
+
 package cc.douyidou.service.common.response.user;
 
 import cc.douyidou.common.utils.bean.BeanUtils;
@@ -8,6 +16,13 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 
+/**
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
+ */
 @Data
 @NoArgsConstructor
 public class DouUserResponse implements Serializable {

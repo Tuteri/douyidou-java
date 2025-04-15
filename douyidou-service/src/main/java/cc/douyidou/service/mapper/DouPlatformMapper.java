@@ -8,9 +8,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 支持的平台Mapper接口
- * 
+ * @probject douyidou
  * @author Tuteri
- * @date 2025-03-23
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
  */
 @Mapper
 public interface DouPlatformMapper extends BaseMapper<DouPlatform>

@@ -1,3 +1,11 @@
+/**
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025-04-16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
+ */
+
 package cc.douyidou.service.common.response.parse;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -7,6 +15,13 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 
+/**
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
+ */
 @Data
 public class TranscodeResponse implements Serializable {
 	// 任务名

@@ -16,6 +16,13 @@ import java.text.ParseException;
 import java.util.*;
 
 
+/**
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc  保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
+ */
 public class MyRecord implements Serializable {
 
     private static final long serialVersionUID = 905784513600884082L;
@@ -43,7 +50,7 @@ public class MyRecord implements Serializable {
      *
      * @param columns the columns map
      */
-    public MyRecord setColums(Map<String, Object> columns) {
+    public MyRecord setColumns(Map<String, Object> columns) {
         this.getColumns().putAll(columns);
         return this;
     }
@@ -53,7 +60,7 @@ public class MyRecord implements Serializable {
      *
      * @param record the MyRecord object
      */
-    public MyRecord setColums(MyRecord record) {
+    public MyRecord setColumns(MyRecord record) {
         this.getColumns().putAll(record.getColumns());
         return this;
     }
@@ -63,7 +70,7 @@ public class MyRecord implements Serializable {
      *
      * @param jsonObject the MyRecord object
      */
-    public MyRecord setColums(JSONObject jsonObject) {
+    public MyRecord setColumns(JSONObject jsonObject) {
         Map<String, Object> columns = this.getColumns();
         jsonObject.forEach(columns::put);
         return this;
@@ -76,7 +83,7 @@ public class MyRecord implements Serializable {
      * @param <T>
      * @return
      */
-    public <T> MyRecord setColums(T t) {
+    public <T> MyRecord setColumns(T t) {
         Map<String, Object> columns = this.getColumns();
 
         String[] fieldNames = getFiledName(t);

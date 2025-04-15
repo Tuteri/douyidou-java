@@ -4,10 +4,11 @@ import cc.douyidou.common.annotation.Excel;
 import lombok.Data;
 
 /**
- * 使用说明对象 dou_help
- * 
+ * @probject douyidou
  * @author Tuteri
- * @date 2025-04-05
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
  */
 @Data
 public class DouHelp extends DouBase

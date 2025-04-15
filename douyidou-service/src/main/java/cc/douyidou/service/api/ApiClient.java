@@ -1,3 +1,11 @@
+/**
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025-04-16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
+ */
+
 package cc.douyidou.service.api;
 
 import okhttp3.*;
@@ -8,6 +16,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
+ */
 public class ApiClient {
     private final String appId;
     private final String appSecret;

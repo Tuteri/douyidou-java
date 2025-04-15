@@ -13,9 +13,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
  * 使用说明Service业务层处理
- * 
+ * @probject douyidou
  * @author Tuteri
- * @date 2025-04-05
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc  保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
  */
 @Service
 public class DouHelpServiceImpl extends ServiceImpl<DouHelpMapper, DouHelp> implements IDouHelpService

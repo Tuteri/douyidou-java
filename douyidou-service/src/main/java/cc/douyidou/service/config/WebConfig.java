@@ -1,3 +1,11 @@
+/**
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025-04-16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
+ */
+
 package cc.douyidou.service.config;
 
 import cc.douyidou.service.interceptor.DouUserAuthenticationInterceptor;
@@ -10,7 +18,11 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * web配置
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
  */
 @Configuration
 @AllArgsConstructor

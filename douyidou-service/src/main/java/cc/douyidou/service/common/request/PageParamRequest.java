@@ -3,7 +3,13 @@ package cc.douyidou.service.common.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-// 分页请求类
+/**
+ * @probject douyidou
+ * @author Tuteri
+ * @date 2025/04/16
+ * 版权所有 © 2025 douyidou.cc 保留所有权利。
+ * 本程序仅供学习与测试使用，禁止商用。
+ */
 @Data
 public class PageParamRequest {
 	
