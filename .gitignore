@@ -53,4 +53,4 @@ logs/*
 bin/*
 ry.bat
 ry.sh
-upload/*
+uploadPath/*
