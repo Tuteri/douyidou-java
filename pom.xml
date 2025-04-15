@@ -4,19 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-    <groupId>com.ruoyi</groupId>
-    <artifactId>ruoyi</artifactId>
+    <groupId>cc.douyidou</groupId>
+    <artifactId>douyidou</artifactId>
     <version>3.8.9</version>
 
-    <name>ruoyi</name>
-    <url>http://www.ruoyi.vip</url>
-    <description>若依管理系统</description>
+    <name>douyidou</name>
+    <url>https://github.com/Tuteri/wx-routine</url>
+    <description>抖一抖无水印提取系统</description>
     
     <properties>
-        <ruoyi.version>3.8.9</ruoyi.version>
+        <douyidou.version>3.8.9</douyidou.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <spring-boot.version>3.3.4</spring-boot.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <druid.version>1.2.23</druid.version>
@@ -150,37 +150,37 @@
 
             <!-- 定时任务-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-quartz</artifactId>
-                <version>${ruoyi.version}</version>
+                <groupId>cc.douyidou</groupId>
+                <artifactId>douyidou-quartz</artifactId>
+                <version>${douyidou.version}</version>
             </dependency>
 
             <!-- 代码生成-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-generator</artifactId>
-                <version>${ruoyi.version}</version>
+                <groupId>cc.douyidou</groupId>
+                <artifactId>douyidou-generator</artifactId>
+                <version>${douyidou.version}</version>
             </dependency>
 
             <!-- 核心模块-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-framework</artifactId>
-                <version>${ruoyi.version}</version>
+                <groupId>cc.douyidou</groupId>
+                <artifactId>douyidou-framework</artifactId>
+                <version>${douyidou.version}</version>
             </dependency>
 
             <!-- 系统模块-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-system</artifactId>
-                <version>${ruoyi.version}</version>
+                <groupId>cc.douyidou</groupId>
+                <artifactId>douyidou-system</artifactId>
+                <version>${douyidou.version}</version>
             </dependency>
 
             <!-- 通用工具-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-common</artifactId>
-                <version>${ruoyi.version}</version>
+                <groupId>cc.douyidou</groupId>
+                <artifactId>douyidou-common</artifactId>
+                <version>${douyidou.version}</version>
             </dependency>
 
             <!--mybatis plus extension,包含了mybatis plus core-->
@@ -242,14 +242,14 @@
         </dependency>
     </dependencies>
     <modules>
-        <module>ruoyi-server</module>
+        <module>douyidou-server</module>
 <!--        <module>dou-service</module>-->
-        <module>ruoyi-framework</module>
-        <module>ruoyi-system</module>
-        <module>ruoyi-quartz</module>
-        <module>ruoyi-generator</module>
-        <module>ruoyi-common</module>
-        <module>ruoyi-service</module>
+        <module>douyidou-framework</module>
+        <module>douyidou-system</module>
+        <module>douyidou-quartz</module>
+        <module>douyidou-generator</module>
+        <module>douyidou-common</module>
+        <module>douyidou-service</module>
     </modules>
     <packaging>pom</packaging>
 

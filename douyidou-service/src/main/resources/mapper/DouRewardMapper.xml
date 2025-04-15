@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.douyidou.service.mapper.DouRewardMapper">
+    
+    <resultMap type="DouReward" id="DouRewardResult">
+        <result property="id"    column="id"    />
+        <result property="uid"    column="uid"    />
+        <result property="adId"    column="ad_id"    />
+        <result property="parseNum"    column="parse_num"    />
+        <result property="tokens"    column="tokens"    />
+        <result property="source"    column="source"    />
+        <result property="type"    column="type"    />
+        <result property="proactive"    column="proactive"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectDouRewardVo">
+        select id, uid, ad_id, parse_num, tokens, source, type,proactive, create_time from dou_reward
+    </sql>
+
+    <select id="selectDouRewardList" parameterType="DouReward" resultMap="DouRewardResult">
+        <include refid="selectDouRewardVo"/>
+        <where>  
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="adId != null  and adId != ''"> and ad_id = #{adId}</if>
+            <if test="parseNum != null "> and parse_num = #{parseNum}</if>
+            <if test="tokens != null "> and tokens = #{tokens}</if>
+            <if test="source != null  and source != ''"> and source = #{source}</if>
+            <if test="type != null "> and type = #{type}</if>
+        </where>
+        order By id Desc
+    </select>
+    
+    <select id="selectDouRewardById" parameterType="Long" resultMap="DouRewardResult">
+        <include refid="selectDouRewardVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDouReward" parameterType="DouReward">
+        insert into dou_reward
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="uid != null">uid,</if>
+            <if test="adId != null and adId != ''">ad_id,</if>
+            <if test="parseNum != null">parse_num,</if>
+            <if test="tokens != null">tokens,</if>
+            <if test="source != null">source,</if>
+            <if test="type != null">type,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="uid != null">#{uid},</if>
+            <if test="adId != null and adId != ''">#{adId},</if>
+            <if test="parseNum != null">#{parseNum},</if>
+            <if test="tokens != null">#{tokens},</if>
+            <if test="source != null">#{source},</if>
+            <if test="type != null">#{type},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDouReward" parameterType="DouReward">
+        update dou_reward
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="adId != null and adId != ''">ad_id = #{adId},</if>
+            <if test="parseNum != null">parse_num = #{parseNum},</if>
+            <if test="tokens != null">tokens = #{tokens},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDouRewardById" parameterType="Long">
+        delete from dou_reward where id = #{id}
+    </delete>
+
+    <delete id="deleteDouRewardByIds" parameterType="String">
+        delete from dou_reward where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
