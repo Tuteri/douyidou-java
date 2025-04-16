@@ -1,5 +1,11 @@
 # 抖一抖去水印使用说明
 
+❗ [**后端（Java服务端）**](https://github.com/Tuteri/douyidou-java)
+
+❗ [**后台管理**](https://github.com/Tuteri/douyidou-admin)
+
+❗ [**微信小程序**](https://github.com/Tuteri/douyidou-wx-routine)
+
 ## 平台支持说明
 
 | 平台名称     | 标准版 | Pro版     | 解析内容类型             |
