@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import cc.douyidou.service.domain.DouTranslate;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -49,6 +50,10 @@ public class DouParseServiceImpl extends ServiceImpl<DouParseMapper, DouParse> i
         LambdaQueryWrapper<DouParse> lqw = getLqw();
         lqw.ne(DouParse::getPlatform,0);
         lqw.orderByDesc(DouParse::getId);
+        Date now = DateUtil.date();
+        Date ago = DateUtil.offsetDay(now, -30);
+        lqw.between(DouParse::getCreateTime, ago, now);
+        
         List<DouParse> list = list(lqw);
         PageInfo<DouParse> pageInfo = new PageInfo<>(list);
         ArrayList<DouParseResponse> douParseResponseList = new ArrayList<>();

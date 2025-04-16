@@ -1,10 +1,13 @@
 package cc.douyidou.service.service.impl;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -70,6 +73,11 @@ public class DouTranslateServiceImpl extends ServiceImpl<DouTranslateMapper, Dou
 		LambdaQueryWrapper<DouTranslate> lqw = getLqw();
 		lqw.eq(DouTranslate::getType,type);
 		lqw.orderByDesc(DouTranslate::getId);
+		
+		Date now = DateUtil.date();
+		Date ago = DateUtil.offsetDay(now, -30);
+		lqw.between(DouTranslate::getCreateTime, ago, now);
+		
 		List<DouTranslate> list = list(lqw);
 		PageInfo<DouTranslate> pageInfo = new PageInfo<>(list);
 		ArrayList<TranscodeResponse> transcodeResponseList = new ArrayList<>();
