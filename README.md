@@ -163,6 +163,10 @@ npm install
 npm run build:prod
 ```
 
+**账号：**admin
+
+**密码：**admin123
+
 ### 小程序
 
 - 基础库 >= 2.19.2
