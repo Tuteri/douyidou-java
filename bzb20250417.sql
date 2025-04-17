@@ -1,19 +1,3 @@
-/*
- Navicat Premium Dump SQL
-
- Source Server         : docker-d1dserver
- Source Server Type    : MySQL
- Source Server Version : 80038 (8.0.38)
- Source Host           : localhost:3307
- Source Schema         : base_bzb
-
- Target Server Type    : MySQL
- Target Server Version : 80038 (8.0.38)
- File Encoding         : 65001
-
- Date: 16/04/2025 16:36:35
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -644,7 +628,7 @@ CREATE TABLE `sys_job`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注信息',
   PRIMARY KEY (`job_id`, `job_name`, `job_group`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_job
@@ -653,6 +637,7 @@ INSERT INTO `sys_job` VALUES (1, '系统默认（无参）', 'DEFAULT', 'ryTask.
 INSERT INTO `sys_job` VALUES (2, '系统默认（有参）', 'DEFAULT', 'ryTask.ryParams(\'ry\')', '0/15 * * * * ?', '3', '1', '1', 'admin', '2025-03-20 13:36:44', '', NULL, '');
 INSERT INTO `sys_job` VALUES (3, '系统默认（多参）', 'DEFAULT', 'ryTask.ryMultipleParams(\'ry\', true, 2000L, 316.50D, 100)', '0/20 * * * * ?', '3', '1', '1', 'admin', '2025-03-20 13:36:44', '', NULL, '');
 INSERT INTO `sys_job` VALUES (4, '获取转码状态', 'SYSTEM', 'transcodeTask.stats()', '0/10 * * * * ?', '1', '1', '0', 'admin', '2025-03-22 17:30:49', 'admin', '2025-03-22 17:54:39', '');
+INSERT INTO `sys_job` VALUES (6, '清理过期的解析次数', 'SYSTEM', 'douUserTask.clearPntTask()', '0/10 * * * * ?', '1', '1', '1', 'admin', '2025-04-17 19:36:57', '', '2025-04-17 19:59:30', '');
 
 -- ----------------------------
 -- Table structure for sys_job_log
