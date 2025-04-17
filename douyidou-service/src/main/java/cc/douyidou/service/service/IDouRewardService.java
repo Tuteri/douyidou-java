@@ -27,6 +27,7 @@ public interface IDouRewardService extends IService<DouReward> {
 	
 	DouReward findLastByUser();
 	
+	DouReward findLastByUserId(Long userId);
 	/**
 	 * 查询激励广告奖励
 	 *

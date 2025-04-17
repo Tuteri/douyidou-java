@@ -28,22 +28,24 @@ public interface IDouUserService extends IService<DouUser> {
 	 * parseNum消费 -1 常用于解析/下载/转码等
 	 * @return 应用用户
 	 */
-	public Boolean parseNumConsumer(Integer type);
+	public Boolean parseNumConsumer();
+	
+	Boolean parseNumConsumer(Integer parseNum);
 	/**
 	 * 登录用户信息
 	 * @return
 	 */
 	public DouUserResponse getInfo();
-	
-	boolean checkParse(DouUser updateDouUser);
+	boolean checkParse();
+	boolean checkParse(Integer parseNum);
 	/**
 	 * tokens兑换parseNum
 	 */
 	public CommonResult<Object> tokensToParseNum(DouUser douUserRequest);
 	/**
-	 * 用户看广告 奖励下发
+	 * 用户清空 parseNumTemp Task
 	 */
-	public void reward();
+	public void clearPntTask();
 	
 	/**
 	 * 查询应用用户

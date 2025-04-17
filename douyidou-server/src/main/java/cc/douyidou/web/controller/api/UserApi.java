@@ -40,8 +40,8 @@ public class UserApi {
 	 * @return
 	 */
 	@GetMapping("user/consumer")
-	public CommonResult<String> userInfo(@RequestParam(value = "type",defaultValue = "1") Integer type) {
-		douUserService.parseNumConsumer(type);
+	public CommonResult<String> consumer() {
+		douUserService.parseNumConsumer();
 		return CommonResult.success();
 	}
 	/**

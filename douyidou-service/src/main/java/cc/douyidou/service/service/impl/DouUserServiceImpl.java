@@ -51,15 +51,32 @@ public class DouUserServiceImpl extends ServiceImpl<DouUserMapper, DouUser> impl
 	 * @return 应用用户
 	 */
 	@Override
-	public Boolean parseNumConsumer(Integer type) {
+	public Boolean parseNumConsumer() {
+		return parseNumConsumer(1);
+	}
+	/**
+	 * parseNumConsumer -parseNum 常用于解析/下载/转码等
+	 * @return 应用用户
+	 */
+	@Override
+	public Boolean parseNumConsumer(Integer parseNum) {
+		if(parseNum < 0) return false;
 		DouUser user = SecurityUtils.getLoginDouUser().getUser();
 		DouUser updateDouUser = new DouUser();
-		System.out.println(type);
-		System.out.println(user.getParseNumTemp());
-		if(type == 1 && user.getParseNumTemp() > 0){
-			updateDouUser.setParseNumTemp(user.getParseNumTemp() - 1);
-		}else if(type == 2 && user.getParseNum() > 0){
-			updateDouUser.setParseNum(user.getParseNum() - 1);
+		int temp = user.getParseNumTemp();
+		int perm = user.getParseNum();
+		if (parseNum <= temp) {
+			// 临时点数足够
+			updateDouUser.setParseNumTemp(temp - parseNum);
+		} else if (parseNum <= temp + perm) {
+			// 临时点数不够，但总点数足够，混合扣除
+			int fromTemp = temp;
+			int fromPerm = parseNum - fromTemp;
+			updateDouUser.setParseNumTemp(0);
+			updateDouUser.setParseNum(perm - fromPerm);
+		} else {
+			// 总点数不足
+			return false;
 		}
 		updateDouUser.setId(user.getId());
 		updateDouUser.setUpdateTime(DateUtil.date());
@@ -132,11 +149,19 @@ public class DouUserServiceImpl extends ServiceImpl<DouUserMapper, DouUser> impl
 		
 		return douUserResponse;
 	}
+	
 	/**
 	 * 用户解析、保存、转码判断
 	 */
 	@Override
-	public boolean checkParse(DouUser updateDouUser) {
+	public boolean checkParse() {
+		return checkParse(1);
+	}
+	/**
+	 * 用户解析、保存、转码判断
+	 */
+	@Override
+	public boolean checkParse(Integer parseNum) {
 		DouUser douUser = SecurityUtils.getLoginDouUser().getUser();
 		// 读取配置
 		// true:在{广告间隔时长}内，{广告奖励次数}次数为0，则需要观看广告
@@ -145,20 +170,13 @@ public class DouUserServiceImpl extends ServiceImpl<DouUserMapper, DouUser> impl
 		Boolean adParseStatus = Boolean.valueOf(sysConfigService.selectConfigByKey("routine.adParseStatus"));
 		// 不是会员 并且 开启了解析广告
 		if (douUser.getLevel() == 0 && adParseStatus) {
-			DouReward douReward = douRewardService.findLastByUser();
 			// 有存活奖励
-			if (ObjectUtil.isNotNull(douReward)) {
-				//Date createTime = douReward.getCreateTime();
-				//小程序广告间隔时长，距上次广告adInterval
-				//if (DateUtil.between(createTime, DateUtil.date(), DateUnit.SECOND) > adInterval) {
-				
+			if (ObjectUtil.isNotNull(douRewardService.findLastByUser())) {
 				// 开启了广告次数控制
 				if (adRewardParseNumStatus) {
-					if (douUser.getParseNumTemp() > 0) {
-						parseNumConsumer(1);
-					} else if (douUser.getParseNum() > 0) {
-						parseNumConsumer(2);
-					} else {
+					if (douUser.getParseNumTemp() > parseNum || douUser.getParseNum() > parseNum) {
+						return parseNumConsumer(parseNum);
+					}  else {
 						return false;
 					}
 				}
@@ -166,8 +184,8 @@ public class DouUserServiceImpl extends ServiceImpl<DouUserMapper, DouUser> impl
 				
 			} else {
 				// 没有存活奖励
-				if (douUser.getParseNum() > 0) {
-					parseNumConsumer(2);
+				if (douUser.getParseNum() > parseNum) {
+					return parseNumConsumer(parseNum);
 				} else {
 					return false;
 				}
@@ -205,11 +223,23 @@ public class DouUserServiceImpl extends ServiceImpl<DouUserMapper, DouUser> impl
 	}
 	
 	/**
-	 * 用户看广告 奖励下发
+	 * 用户清空 parseNumTemp Task
 	 */
 	@Override
-	public void reward() {
-	
+	public void clearPntTask() {
+		LambdaQueryWrapper<DouUser> lqw = new LambdaQueryWrapper<>();
+		lqw.gt(DouUser::getParseNumTemp, 0)
+				.eq(DouUser::getLevel, 0);
+		List<DouUser> list = list(lqw);
+		list.forEach(user -> {
+			if(ObjectUtil.isNull(douRewardService.findLastByUserId(user.getId()))){
+				DouUser updateDouUser = new DouUser();
+				updateDouUser.setParseNumTemp(0);
+				updateDouUser.setId(user.getId());
+				updateDouUser.setUpdateTime(DateUtil.date());
+				updateById(updateDouUser);
+			}
+		});
 	}
 	
 	/**

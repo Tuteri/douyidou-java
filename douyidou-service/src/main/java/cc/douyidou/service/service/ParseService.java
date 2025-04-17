@@ -64,7 +64,7 @@ public class ParseService {
 			DouUser updateDouUser = new DouUser();
 			updateDouUser.setId(douUser.getId());
 			updateDouUser.setUpdateTime(DateUtil.date());
-			boolean checkParse = douUserService.checkParse(updateDouUser);
+			boolean checkParse = douUserService.checkParse();
 			if(!checkParse){
 				return CommonResult.failed("请先观看广告");
 			}
@@ -124,7 +124,7 @@ public class ParseService {
 			DouUser updateDouUser = new DouUser();
 			updateDouUser.setId(douUser.getId());
 			updateDouUser.setUpdateTime(DateUtil.date());
-			boolean checkParse = douUserService.checkParse(updateDouUser);
+			boolean checkParse = douUserService.checkParse();
 			if(!checkParse){
 				return CommonResult.failed("请先观看广告");
 			}
@@ -171,7 +171,7 @@ public class ParseService {
 			DouUser updateDouUser = new DouUser();
 			updateDouUser.setId(douUser.getId());
 			updateDouUser.setUpdateTime(DateUtil.date());
-			boolean checkParse = douUserService.checkParse(updateDouUser);
+			boolean checkParse = douUserService.checkParse();
 			if(!checkParse){
 				return CommonResult.failed("请先观看广告");
 			}
@@ -215,7 +215,7 @@ public class ParseService {
 			DouUser updateDouUser = new DouUser();
 			updateDouUser.setId(douUser.getId());
 			updateDouUser.setUpdateTime(DateUtil.date());
-			boolean checkParse = douUserService.checkParse(updateDouUser);
+			boolean checkParse = douUserService.checkParse();
 			if(!checkParse){
 				return CommonResult.failed("请先观看广告");
 			}

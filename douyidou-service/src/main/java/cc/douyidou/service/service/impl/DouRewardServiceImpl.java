@@ -154,6 +154,23 @@ public class DouRewardServiceImpl extends ServiceImpl<DouRewardMapper, DouReward
 		lqw.last("limit 1");
 		return getOne(lqw);
 	}
+	/**
+	 * 查询是否存在存活广告奖励
+	 *
+	 * @return 激励广告奖励
+	 */
+	@Override
+	public DouReward findLastByUserId(Long userId) {
+		LambdaQueryWrapper<DouReward> lqw = new LambdaQueryWrapper<>();
+		Integer adInterval = Integer.valueOf(sysConfigService.selectConfigByKey("routine.adRewardInterval")); // 秒
+		LocalDateTime expireBefore = LocalDateTime.now().minusSeconds(adInterval);
+		lqw.gt(DouReward::getCreateTime, DateUtil.date(expireBefore))
+				.eq(DouReward::getProactive, 0)
+				.eq(DouReward::getUid, userId);
+		lqw.orderByDesc(DouReward::getId);
+		lqw.last("limit 1");
+		return getOne(lqw);
+	}
 	
 	private LambdaQueryWrapper<DouReward> getLqw() {
 		Long id = SecurityUtils.getLoginDouUser().getUser().getId();
