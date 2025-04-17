@@ -88,7 +88,7 @@ public class DouRewardServiceImpl extends ServiceImpl<DouRewardMapper, DouReward
 			// 开启分享
 			if (shareNumStatus) {
 				// 分享上限
-				if (dayCountByUser() > shareNum) {
+				if (dayCountByUser() >= shareNum) {
 					return null;
 				}
 				douReward.setTokens(shareNumTokens);
