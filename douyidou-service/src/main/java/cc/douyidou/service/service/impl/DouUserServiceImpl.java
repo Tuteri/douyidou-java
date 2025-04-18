@@ -174,7 +174,7 @@ public class DouUserServiceImpl extends ServiceImpl<DouUserMapper, DouUser> impl
 			if (ObjectUtil.isNotNull(douRewardService.findLastByUser())) {
 				// 开启了广告次数控制
 				if (adRewardParseNumStatus) {
-					if (douUser.getParseNumTemp() > parseNum || douUser.getParseNum() > parseNum) {
+					if (douUser.getParseNumTemp() >= parseNum || douUser.getParseNum() >= parseNum) {
 						return parseNumConsumer(parseNum);
 					}  else {
 						return false;
@@ -184,7 +184,7 @@ public class DouUserServiceImpl extends ServiceImpl<DouUserMapper, DouUser> impl
 				
 			} else {
 				// 没有存活奖励
-				if (douUser.getParseNum() > parseNum) {
+				if (douUser.getParseNum() >= parseNum) {
 					return parseNumConsumer(parseNum);
 				} else {
 					return false;
