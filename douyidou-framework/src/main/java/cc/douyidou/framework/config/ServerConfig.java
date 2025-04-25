@@ -28,7 +28,7 @@ public class ServerConfig
     {
         String domain = request.getHeader("X-Host");
         if(ObjectUtil.isNull(domain)) domain = request.getHeader("Host");
-        if (domain.contains("127.0.0.1") || domain.contains("192.168")) {
+        if (domain.contains("127.0.0.1") || domain.contains("localhost") || domain.contains("192.168")) {
             StringBuffer url = request.getRequestURL();
             String contextPath = request.getServletContext().getContextPath();
             return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(contextPath).toString();
