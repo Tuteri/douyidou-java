@@ -90,7 +90,7 @@ public class ParseService {
 			Long id = douParse.getId();
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.make(url);
-			if (!res.get("code").equals(200)) {
+			if (!res.get("code").equals(0)) {
 				logger.error("解析失败 ==> " + res);
 				throw new DouException("解析失败");
 			}
