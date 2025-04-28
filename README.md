@@ -8,6 +8,14 @@
 
 
 
+**🔥DouYiDou API开放平台🔥**
+
+解析接口低至**$0.15**/千次
+
+[点我进入](https://www.douyidou.cc/)
+
+
+
 ❗ [**后端（Java服务端）**](https://github.com/Tuteri/douyidou-java)
 
 ❗ [**后台管理**](https://github.com/Tuteri/douyidou-admin)
