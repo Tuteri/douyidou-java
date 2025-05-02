@@ -135,7 +135,7 @@ public class ParseService {
 			}
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.transcode(url);
-			if (!res.get("code").equals(200)) {
+			if (!res.get("code").equals(0)) {
 				throw new DouException("任务失败");
 			}
 			JSONObject data = JSONObject.from(res.get("data"));
@@ -179,7 +179,7 @@ public class ParseService {
 			String ext = DouUtils.getUrlExt(url);
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.videoMd5(url);
-			if (!res.get("code").equals(200)) {
+			if (!res.get("code").equals(0)) {
 				throw new DouException("任务失败");
 			}
 			JSONObject data = JSONObject.from(res.get("data"));
@@ -223,7 +223,7 @@ public class ParseService {
 			String ext = DouUtils.getUrlExt(url);
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.videoToMp3(url);
-			if (!res.get("code").equals(200)) {
+			if (!res.get("code").equals(0)) {
 				throw new DouException("任务失败");
 			}
 			JSONObject data = JSONObject.from(res.get("data"));
@@ -308,7 +308,7 @@ public class ParseService {
 		try {
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.getTranscodeStats(task);
-			if (!res.get("code").equals(200)) {
+			if (!res.get("code").equals(0)) {
 				throw new DouException("获取任务信息失败");
 			}
 			System.out.println(res);
@@ -325,7 +325,7 @@ public class ParseService {
 		try {
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.getVideoMd5Stats(task);
-			if (!res.get("code").equals(200)) {
+			if (!res.get("code").equals(0)) {
 				throw new DouException("获取任务信息失败");
 			}
 			System.out.println(res);
@@ -342,7 +342,7 @@ public class ParseService {
 		try {
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.getVideoToMp3Stats(task);
-			if (!res.get("code").equals(200)) {
+			if (!res.get("code").equals(0)) {
 				throw new DouException("获取任务信息失败");
 			}
 			System.out.println(res);
@@ -364,7 +364,7 @@ public class ParseService {
 			}
 			ApiClient apiClient = getApiClient();
 			Map<String, Object> res = apiClient.stopTranscode(task);
-			if (!res.get("code").equals(200)) {
+			if (!res.get("code").equals(0)) {
 				throw new DouException("停止任务失败");
 			}
 			System.out.println(res);

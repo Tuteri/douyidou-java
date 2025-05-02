@@ -41,69 +41,63 @@ public class ApiClient {
      * @throws Exception
      */
     public Map<String, Object> make(String url) throws Exception {
-        String endpoint = "/67d27c333e192";
+        String endpoint = "/parse";
         return sendGetRequest(endpoint, Collections.singletonMap("url", url));
     }
 
     public Map<String, Object> transcode(String url) throws Exception {
-        String endpoint = "/67da9381bfa31";
+        String endpoint = "/translate/make";
         Map<String, Object> response = sendGetRequest(endpoint, Collections.singletonMap("url", url));
 
         if (!response.get("code").toString().equals("200")) {
             throw new RuntimeException("转码失败");
         }
-        
-        // 这里可添加 Translate 业务逻辑
         return response;
     }
     public Map<String, Object> getTranscodeStats(String task) throws Exception {
-        String endpoint = "/67da93be2e6ed";
+        String endpoint = "/translate/stats";
         return sendGetRequest(endpoint, Collections.singletonMap("task", task));
     }
 
     public Map<String, Object> stopTranscode(String task) throws Exception {
-        String endpoint = "/67da93deb1116";
+        String endpoint = "/translate/stop";
         return sendGetRequest(endpoint, Collections.singletonMap("task", task));
     }
     public Map<String, Object> videoMd5(String url) throws Exception {
-        String endpoint = "/67e2d72f4503f";
+        String endpoint = "/videoMd5/make";
         Map<String, Object> response = sendGetRequest(endpoint, Collections.singletonMap("url", url));
         
         if (!response.get("code").toString().equals("200")) {
             throw new RuntimeException("转码失败");
         }
-        
-        // 这里可添加 Translate 业务逻辑
         return response;
     }
     public Map<String, Object> getVideoMd5Stats(String task) throws Exception {
-        String endpoint = "/67e2d74ecf40b";
+        String endpoint = "/videoMd5/stats";
         return sendGetRequest(endpoint, Collections.singletonMap("task", task));
     }
     
     public Map<String, Object> stopVideoMd5(String task) throws Exception {
-        String endpoint = "/67e2d76d08895";
+        String endpoint = "/videoMd5/stop";
         return sendGetRequest(endpoint, Collections.singletonMap("task", task));
     }
     
     public Map<String, Object> videoToMp3(String url) throws Exception {
-        String endpoint = "/67e2d77e28347";
+        String endpoint = "/mp4ToMp3/make";
         Map<String, Object> response = sendGetRequest(endpoint, Collections.singletonMap("url", url));
         
         if (!response.get("code").toString().equals("200")) {
             throw new RuntimeException("转码失败");
         }
-        
-        // 这里可添加 Translate 业务逻辑
         return response;
     }
     public Map<String, Object> getVideoToMp3Stats(String task) throws Exception {
-        String endpoint = "/67e2d7963a823";
+        String endpoint = "/mp4ToMp3/stats";
         return sendGetRequest(endpoint, Collections.singletonMap("task", task));
     }
     
     public Map<String, Object> stopVideoToMp3(String task) throws Exception {
-        String endpoint = "67e2d7a87f0fd";
+        String endpoint = "/mp4ToMp3/stop";
         return sendGetRequest(endpoint, Collections.singletonMap("task", task));
     }
     private Map<String, Object> sendGetRequest(String endpoint, Map<String, String> params) throws Exception {
