@@ -60,8 +60,6 @@
         <dependency>
             <groupId>cc.douyidou.service</groupId>
             <artifactId>douyidou-service</artifactId>
-            <version>3.8.9</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
