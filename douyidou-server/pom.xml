@@ -57,10 +57,6 @@
             <groupId>cc.douyidou.service</groupId>
             <artifactId>douyidou-service</artifactId>
         </dependency>
-        <dependency>
-            <groupId>cc.douyidou.service</groupId>
-            <artifactId>douyidou-service</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

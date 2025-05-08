@@ -21,7 +21,6 @@
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <druid.version>1.2.23</druid.version>
         <bitwalker.version>1.21</bitwalker.version>
-        <swagger.version>3.0.0</swagger.version>
         <kaptcha.version>2.3.3</kaptcha.version>
         <pagehelper.boot.version>1.4.7</pagehelper.boot.version>
         <fastjson.version>2.0.43</fastjson.version>
@@ -207,12 +206,6 @@
                 <artifactId>weixin-java-miniapp</artifactId>
                 <version>${weixin-java.version}</version>
             </dependency>
-            <!--TTL-->
-            <!--<dependency>-->
-            <!--    <groupId>com.alibaba</groupId>-->
-            <!--    <artifactId>transmittable-thread-local</artifactId>-->
-            <!--    <version>${ttl.version}</version>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
@@ -230,7 +223,6 @@
     </dependencies>
     <modules>
         <module>douyidou-server</module>
-<!--        <module>dou-service</module>-->
         <module>douyidou-framework</module>
         <module>douyidou-system</module>
         <module>douyidou-quartz</module>
