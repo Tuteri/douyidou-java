@@ -19,6 +19,10 @@ import cc.douyidou.service.domain.DouParse;
  */
 public interface IDouParseService extends IService<DouParse>
 {
+    /**
+     * 过滤下载url
+     */
+    void filterDownloadUrl ();
     CommonResult<DouParseResponse> getInfo(DouParse douParseRequest);
     Long getTodayCount();
     /**

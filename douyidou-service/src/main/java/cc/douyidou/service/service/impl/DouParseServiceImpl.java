@@ -1,12 +1,16 @@
 package cc.douyidou.service.service.impl;
 
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import cc.douyidou.service.domain.DouTranslate;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -36,6 +40,51 @@ public class DouParseServiceImpl extends ServiceImpl<DouParseMapper, DouParse> i
 {
     @Autowired
     private DouParseMapper douParseMapper;
+    
+    /**
+     * 过滤下载url
+     */
+    @Override
+    public void filterDownloadUrl() {
+        List<DouParse> list = list();
+        
+        List<String> collect = new ArrayList<>();
+        list.forEach(douParse -> {
+            String video = douParse.getVideo();
+            String images = douParse.getImages();
+            String cover = douParse.getCover();
+            String audio = douParse.getAudio();
+            if (StrUtil.isNotBlank(video)) {
+                List<String> videoList = JSONObject.parseObject(video, List.class);
+                collect.addAll(videoList);
+            }
+            if(StrUtil.isNotBlank(images)) {
+                List<String> imagesList = JSONObject.parseObject(images, List.class);
+                collect.addAll(imagesList);
+            }
+            if(StrUtil.isNotBlank(audio)) {
+                List<String> audioList = JSONObject.parseObject(audio, List.class);
+                collect.addAll(audioList);
+            }
+            if(StrUtil.isNotBlank(cover)) {
+                collect.add(cover);
+            }
+        });
+        List<String> distinctDomains = collect.stream()
+                .filter(StrUtil::isNotBlank)
+                .map(url -> {
+                    try {
+                        return "https://"+new URL(url).getHost()+";";
+                    } catch (Exception e) {
+                        return null; // 忽略非法URL
+                    }
+                })
+                .filter(StrUtil::isNotBlank)
+                .distinct()
+                .toList();
+        System.out.println(JSONObject.toJSONString(distinctDomains));
+    }
+    
     @Override
     public CommonResult<DouParseResponse> getInfo(DouParse douParseRequest) {
         LambdaQueryWrapper<DouParse> lqw = getLqw();
@@ -51,8 +100,8 @@ public class DouParseServiceImpl extends ServiceImpl<DouParseMapper, DouParse> i
         lqw.ne(DouParse::getPlatform,0);
         lqw.orderByDesc(DouParse::getId);
         Date now = DateUtil.date();
-        Date ago = DateUtil.offsetDay(now, -30);
-        lqw.between(DouParse::getCreateTime, ago, now);
+        Date ago = DateUtil.offsetDay(now, -15);
+        lqw.gt(DouParse::getCreateTime, ago);
         
         List<DouParse> list = list(lqw);
         PageInfo<DouParse> pageInfo = new PageInfo<>(list);
