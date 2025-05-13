@@ -28,6 +28,8 @@ import java.util.UUID;
 @RequestMapping("/api")
 public class FetchApi {
 	
+	public static String pcua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36";
+	public static String iosua = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1";
 	
 	@GetMapping(value = {"f","f/{filename}"})
 	public void fetch(
@@ -60,22 +62,30 @@ public class FetchApi {
 					.build();
 			Request.Builder requestBuilder = new Request.Builder().url(decodedUrl);
 					//.addHeader(HttpHeaders.HOST, host);
-			
+			System.out.println(decodedUrl);
 			if (platform == 4) { // 微博
 				String ua = request.getHeader(HttpHeaders.USER_AGENT);
 				if (ua == null) {
 					sendJsonError(response, HttpStatus.BAD_REQUEST, "Invalid Post");
 					return;
 				}
-				requestBuilder.addHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1")
+				requestBuilder.addHeader(HttpHeaders.USER_AGENT, iosua)
 						.addHeader(HttpHeaders.REFERER, "https://m.weibo.com/");
-			} else if (platform == 17) { // 新片场
+			}if (platform == 7) { // 哔哩哔哩
 				String ua = request.getHeader(HttpHeaders.USER_AGENT);
 				if (ua == null) {
 					sendJsonError(response, HttpStatus.BAD_REQUEST, "Invalid Post");
 					return;
 				}
-				requestBuilder.addHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1")
+				requestBuilder.addHeader(HttpHeaders.USER_AGENT, pcua)
+						.addHeader(HttpHeaders.REFERER, "https://www.bilibili.com");
+			}  else if (platform == 17) { // 新片场
+				String ua = request.getHeader(HttpHeaders.USER_AGENT);
+				if (ua == null) {
+					sendJsonError(response, HttpStatus.BAD_REQUEST, "Invalid Post");
+					return;
+				}
+				requestBuilder.addHeader(HttpHeaders.USER_AGENT, iosua)
 						.addHeader(HttpHeaders.REFERER, "https://h5.xinpianchang.com/")
 						.addHeader(HttpHeaders.RANGE, "bytes=0-");
 			}
