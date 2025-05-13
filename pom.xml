@@ -181,6 +181,11 @@
                 <artifactId>douyidou-common</artifactId>
                 <version>${douyidou.version}</version>
             </dependency>
+            <dependency>
+                <groupId>cc.douyidou</groupId>
+                <artifactId>douyidou-service</artifactId>
+                <version>${douyidou.version}</version>
+            </dependency>
 
             <!--mybatis plus extension,包含了mybatis plus core-->
             <dependency>

@@ -9,7 +9,7 @@
         <version>3.8.9</version>
     </parent>
 
-    <groupId>cc.douyidou.service</groupId>
+    <groupId>cc.douyidou</groupId>
     <artifactId>douyidou-service</artifactId>
     <dependencies>
         <!-- OkHttp 用于 HTTP 请求 -->

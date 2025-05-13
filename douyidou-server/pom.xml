@@ -54,7 +54,7 @@
             <artifactId>douyidou-generator</artifactId>
         </dependency>
         <dependency>
-            <groupId>cc.douyidou.service</groupId>
+            <groupId>cc.douyidou</groupId>
             <artifactId>douyidou-service</artifactId>
         </dependency>
     </dependencies>
