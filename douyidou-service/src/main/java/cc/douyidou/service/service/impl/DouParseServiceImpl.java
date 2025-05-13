@@ -100,7 +100,7 @@ public class DouParseServiceImpl extends ServiceImpl<DouParseMapper, DouParse> i
         lqw.ne(DouParse::getPlatform,0);
         lqw.orderByDesc(DouParse::getId);
         Date now = DateUtil.date();
-        Date ago = DateUtil.offsetDay(now, -15);
+        Date ago = DateUtil.offsetDay(now, -7);
         lqw.gt(DouParse::getCreateTime, ago);
         
         List<DouParse> list = list(lqw);

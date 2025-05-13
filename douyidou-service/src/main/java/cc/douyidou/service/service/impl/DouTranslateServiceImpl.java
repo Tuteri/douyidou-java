@@ -75,7 +75,7 @@ public class DouTranslateServiceImpl extends ServiceImpl<DouTranslateMapper, Dou
 		lqw.orderByDesc(DouTranslate::getId);
 		
 		Date now = DateUtil.date();
-		Date ago = DateUtil.offsetDay(now, -30);
+		Date ago = DateUtil.offsetDay(now, -7);
 		lqw.between(DouTranslate::getCreateTime, ago, now);
 		
 		List<DouTranslate> list = list(lqw);
