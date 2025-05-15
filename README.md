@@ -8,10 +8,10 @@
 
 
 
-**🔥DouYiDou API开放平台🔥**
+**🔥DouYiDou API平台🔥**
 
 
-解析接口低至  **$0.15** /千次 [点我进入](https://www.douyidou.cc/)
+解析接 [点我进入](https://www.douyidou.cc/)
 
 
 
