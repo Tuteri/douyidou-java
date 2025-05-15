@@ -11,7 +11,7 @@
 **🔥DouYiDou API平台🔥**
 
 
-解析接 [点我进入](https://www.douyidou.cc/)
+解析接口 [点我进入](https://www.douyidou.cc/)
 
 
 
