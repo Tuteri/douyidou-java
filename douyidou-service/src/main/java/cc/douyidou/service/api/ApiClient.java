@@ -47,12 +47,7 @@ public class ApiClient {
 
     public Map<String, Object> transcode(String url) throws Exception {
         String endpoint = "/translate/make";
-        Map<String, Object> response = sendGetRequest(endpoint, Collections.singletonMap("url", url));
-
-        if (!response.get("code").toString().equals("200")) {
-            throw new RuntimeException("转码失败");
-        }
-        return response;
+		return sendGetRequest(endpoint, Collections.singletonMap("url", url));
     }
     public Map<String, Object> getTranscodeStats(String task) throws Exception {
         String endpoint = "/translate/stats";
@@ -65,12 +60,7 @@ public class ApiClient {
     }
     public Map<String, Object> videoMd5(String url) throws Exception {
         String endpoint = "/videoMd5/make";
-        Map<String, Object> response = sendGetRequest(endpoint, Collections.singletonMap("url", url));
-        
-        if (!response.get("code").toString().equals("200")) {
-            throw new RuntimeException("转码失败");
-        }
-        return response;
+		return sendGetRequest(endpoint, Collections.singletonMap("url", url));
     }
     public Map<String, Object> getVideoMd5Stats(String task) throws Exception {
         String endpoint = "/videoMd5/stats";
@@ -84,12 +74,7 @@ public class ApiClient {
     
     public Map<String, Object> videoToMp3(String url) throws Exception {
         String endpoint = "/mp4ToMp3/make";
-        Map<String, Object> response = sendGetRequest(endpoint, Collections.singletonMap("url", url));
-        
-        if (!response.get("code").toString().equals("200")) {
-            throw new RuntimeException("转码失败");
-        }
-        return response;
+		return sendGetRequest(endpoint, Collections.singletonMap("url", url));
     }
     public Map<String, Object> getVideoToMp3Stats(String task) throws Exception {
         String endpoint = "/mp4ToMp3/stats";

@@ -257,7 +257,7 @@ public class ParseService {
 	 */
 	public void transcodeStatsTask() {
 		LambdaQueryWrapper<DouTranslate> lqw = new LambdaQueryWrapper<>();
-		lqw.in(DouTranslate::getStatus, Arrays.asList(-1, 0, 1));
+		lqw.in(DouTranslate::getStatus, Arrays.asList(0, 1));
 		lqw.orderByAsc(DouTranslate::getId);
 		List<DouTranslate> list = translateService.list(lqw);
 		for (DouTranslate douTranslate : list) {
@@ -350,7 +350,7 @@ public class ParseService {
 			TranscodeResponse transcodeResponse = data.toJavaObject(TranscodeResponse.class);
 			return transcodeResponse;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("获取任务信息失败", e);
 			throw new DouException("获取任务信息失败");
 		}
 	}
