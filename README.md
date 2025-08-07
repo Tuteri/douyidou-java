@@ -170,9 +170,9 @@ npm install
 npm run build:prod
 ```
 
-**账号：**admin
+**账号：** admin
 
-**密码：**admin123
+**密码：** admin123
 
 ### 小程序
 
